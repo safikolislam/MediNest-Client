@@ -1,13 +1,14 @@
 import logo from '../../assets/MedicineLogo.png';
 import { FaShoppingCart } from 'react-icons/fa';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
+import { useContext } from 'react';
+import { AuthContext } from '../../Contexts/AuthContext';
 
 const Navbar = () => {
-  const user = null; 
+  const { user, logOut } = useContext(AuthContext);
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
-   
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -29,27 +30,24 @@ const Navbar = () => {
         </div>
       </div>
 
-    
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
             <NavLink to="/" className={({ isActive }) =>
-              isActive ? 'border-b-2 border-green-600 pb-1' : ''}>
+              isActive ? 'border-b-2 border-green-600 ' : ''}>
               Home
             </NavLink>
           </li>
           <li>
             <NavLink to="/Shop" className={({ isActive }) =>
-              isActive ? 'border-b-2 border-green-600 pb-1' : ''}>
+              isActive ? 'border-b-2 border-green-600 ' : ''}>
               Shop
             </NavLink>
           </li>
         </ul>
       </div>
 
-
       <div className="navbar-end flex items-center gap-3">
-
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost">Language</div>
           <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-32">
@@ -62,7 +60,6 @@ const Navbar = () => {
           <FaShoppingCart />
         </button>
 
-    
         {user ? (
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -73,23 +70,25 @@ const Navbar = () => {
             <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
               <li>
                 <NavLink to="/UpdateProfile" className={({ isActive }) =>
-                  isActive ? 'border-b-2 border-green-600 pb-1' : ''}>
+                  isActive ? 'border-b-2 border-green-600 ' : ''}>
                   Update Profile
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/Dashboard" className={({ isActive }) =>
-                  isActive ? 'border-b-2 border-green-600 pb-1' : ''}>
+                  isActive ? 'border-b-2 border-green-600 ' : ''}>
                   Dashboard
                 </NavLink>
               </li>
               <li>
-                <button>Logout</button>
+                <button onClick={logOut}>Logout</button>
               </li>
             </ul>
           </div>
         ) : (
-          <button className="btn bg-green-600 text-white">Join Us</button>
+          <Link to="/SignUp">
+            <button className="btn bg-green-600 text-white">Join Us</button>
+          </Link>
         )}
       </div>
     </div>
@@ -97,5 +96,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 
 
