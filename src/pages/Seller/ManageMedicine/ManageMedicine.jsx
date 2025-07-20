@@ -1,19 +1,49 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const ManageMedicines = () => {
   const { register, handleSubmit, reset } = useForm();
   const [medicines, setMedicines] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
 
+  
+  const handleImageUpload = async (e) => {
+    const image = e.target.files[0];
+    if (!image) return;
+
+    const formData = new FormData();
+    formData.append("image", image);
+
+    try {
+      const res = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`,
+        formData
+      );
+      setUploadedImageUrl(res.data.data.url);
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      alert("Failed to upload image");
+    }
+  };
+
+  
   const onSubmit = (data) => {
+    if (!uploadedImageUrl) {
+      alert("Please upload an image before submitting.");
+      return;
+    }
+
     const newMedicine = {
       id: Date.now(),
       ...data,
-      image: URL.createObjectURL(data.image[0]),
+      image: uploadedImageUrl,
     };
+
     setMedicines((prev) => [...prev, newMedicine]);
     reset();
+    setUploadedImageUrl(""); 
     setModalOpen(false);
   };
 
@@ -21,15 +51,11 @@ const ManageMedicines = () => {
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Manage Medicines</h2>
-        <button
-          onClick={() => setModalOpen(true)}
-          className="btn btn-primary"
-        >
+        <button onClick={() => setModalOpen(true)} className="btn bg-green-500">
           Add Medicine
         </button>
       </div>
 
-    
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full">
           <thead>
@@ -50,7 +76,7 @@ const ManageMedicines = () => {
               <tr key={med.id}>
                 <td>{index + 1}</td>
                 <td>
-                  <img src={med.image} alt="img" className="w-12 h-12" />
+                  <img src={med.image} alt="Medicine" className="w-12 h-12" />
                 </td>
                 <td>{med.name}</td>
                 <td>{med.generic}</td>
@@ -65,7 +91,6 @@ const ManageMedicines = () => {
         </table>
       </div>
 
-  
       {modalOpen && (
         <dialog open className="modal">
           <div className="modal-box">
@@ -90,8 +115,9 @@ const ManageMedicines = () => {
               />
               <input
                 type="file"
-                {...register("image", { required: true })}
                 className="file-input file-input-bordered w-full"
+                onChange={handleImageUpload}
+              
               />
               <select {...register("category")} className="select select-bordered w-full">
                 <option value="Painkiller">Painkiller</option>
@@ -119,11 +145,14 @@ const ManageMedicines = () => {
                 className="input input-bordered w-full"
               />
               <div className="modal-action">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn bg-green-500">
                   Save
                 </button>
                 <button
-                  onClick={() => setModalOpen(false)}
+                  onClick={() => {
+                    setModalOpen(false);
+                    setUploadedImageUrl("");
+                  }}
                   className="btn btn-ghost"
                   type="button"
                 >
@@ -139,3 +168,10 @@ const ManageMedicines = () => {
 };
 
 export default ManageMedicines;
+
+
+
+
+
+
+
