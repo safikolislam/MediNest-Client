@@ -58,7 +58,8 @@ export const router = createBrowserRouter([
             },
             {
                 path:"ManageMedicine",
-                Component:ManageMedicine
+                Component:ManageMedicine,
+                
             },
             {
                 path:"PaymentHistory",

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import {  useState } from 'react'
 import { GrLogout } from 'react-icons/gr'
 
 import { AiOutlineBars } from 'react-icons/ai'
@@ -13,10 +13,11 @@ import SellerMenu from './Menu/SellerMenu'
 
 import logo from '../assets/MedicineLogo.png'
 import UserMenu from './Menu/UserMenu'
+import UseAuth from '../hooks/UseAuth'
 
-import { AuthContext } from '../Contexts/AuthContext'
+
 const Sidebar = () => {
-  const {  logOut } = useContext(AuthContext);
+  const   {logOut}  = UseAuth();
   const [isActive, setIsActive] = useState(false)
 
 

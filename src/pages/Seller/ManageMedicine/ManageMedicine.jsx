@@ -1,14 +1,35 @@
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import axios from "axios";
 
 const ManageMedicines = () => {
   const { register, handleSubmit, reset } = useForm();
-  const [medicines, setMedicines] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
 
-  
+   const queryClient = useQueryClient();
+
+ 
+  const { data: medicines = [], isLoading } = useQuery({
+    queryKey: ['medicines'],
+    queryFn: async () => {
+      const res = await fetch('http://localhost:3000/medicines');
+      return res.json();
+    }
+  });
+
+ 
+   const mutation = useMutation({
+     mutationFn: async (newMedicine) => {
+       const res = await axios.post("http://localhost:3000/medicines", newMedicine);
+       return res.data;
+     },
+     onSuccess: () => {
+       queryClient.invalidateQueries(['medicines']); 
+     },
+   });
+
   const handleImageUpload = async (e) => {
     const image = e.target.files[0];
     if (!image) return;
@@ -28,23 +49,27 @@ const ManageMedicines = () => {
     }
   };
 
-  
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (!uploadedImageUrl) {
       alert("Please upload an image before submitting.");
       return;
     }
 
     const newMedicine = {
-      id: Date.now(),
       ...data,
+      price: parseFloat(data.price),
+      discount: parseFloat(data.discount),
       image: uploadedImageUrl,
     };
 
-    setMedicines((prev) => [...prev, newMedicine]);
-    reset();
-    setUploadedImageUrl(""); 
-    setModalOpen(false);
+    try {
+      await mutation.mutateAsync(newMedicine);
+      reset();
+      setUploadedImageUrl("");
+      setModalOpen(false);
+    } catch (error) {
+      alert("Failed to add medicine");
+    }
   };
 
   return (
@@ -56,40 +81,44 @@ const ManageMedicines = () => {
         </button>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Generic</th>
-              <th>Category</th>
-              <th>Company</th>
-              <th>Mass</th>
-              <th>Price</th>
-              <th>Discount</th>
-            </tr>
-          </thead>
-          <tbody>
-            {medicines.map((med, index) => (
-              <tr key={med.id}>
-                <td>{index + 1}</td>
-                <td>
-                  <img src={med.image} alt="Medicine" className="w-12 h-12" />
-                </td>
-                <td>{med.name}</td>
-                <td>{med.generic}</td>
-                <td>{med.category}</td>
-                <td>{med.company}</td>
-                <td>{med.massUnit}</td>
-                <td>${med.price}</td>
-                <td>{med.discount}%</td>
+      {isLoading ? (
+        <p>Loading medicines...</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="table table-zebra w-full">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Generic</th>
+                <th>Category</th>
+                <th>Company</th>
+                <th>Mass</th>
+                <th>Price</th>
+                <th>Discount</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {medicines.map((med, index) => (
+                <tr key={med._id || med.id}>
+                  <td>{index + 1}</td>
+                  <td>
+                    <img src={med.image} alt="Medicine" className="w-12 h-12" />
+                  </td>
+                  <td>{med.name}</td>
+                  <td>{med.generic}</td>
+                  <td>{med.category}</td>
+                  <td>{med.company}</td>
+                  <td>{med.massUnit}</td>
+                  <td>${med.price}</td>
+                  <td>{med.discount}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {modalOpen && (
         <dialog open className="modal">
@@ -117,7 +146,6 @@ const ManageMedicines = () => {
                 type="file"
                 className="file-input file-input-bordered w-full"
                 onChange={handleImageUpload}
-              
               />
               <select {...register("category")} className="select select-bordered w-full">
                 <option value="Painkiller">Painkiller</option>
@@ -168,6 +196,19 @@ const ManageMedicines = () => {
 };
 
 export default ManageMedicines;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
