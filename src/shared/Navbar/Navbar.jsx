@@ -57,7 +57,7 @@ const Navbar = () => {
         </div>
 
         <button className="btn btn-ghost text-xl">
-          <FaShoppingCart />
+          <Link to="/store"><FaShoppingCart /></Link>
         </button>
 
         {user ? (

@@ -17,6 +17,7 @@ import ManageCategories from "../pages/Admin/ManageCategories/ManageCategories"
 import Payment from "../pages/Admin/payment/Payment"
 import Reports from "../pages/Admin/report/Reports"
 import BannerAds from "../pages/Admin/bannerAds/BannerAds"
+import Store from "../pages/store/Store"
 
 
 
@@ -32,7 +33,8 @@ export const router = createBrowserRouter([
             },
             {
                 path:"/Shop",
-                Component:Shop
+                Component:Shop,
+            
             },
             {
                 path:"/UpdateProfile",
@@ -45,6 +47,10 @@ export const router = createBrowserRouter([
             {
                 path:"/Login",
                 Component:Login
+            },
+            {
+                path:'/store',
+                Component:Store
             }
         ]
     },
