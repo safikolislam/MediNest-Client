@@ -18,6 +18,7 @@ import UseAuth from '../hooks/UseAuth'
 
 const Sidebar = () => {
   const   {logOut}  = UseAuth();
+
   const [isActive, setIsActive] = useState(false)
 
 
@@ -76,9 +77,9 @@ const Sidebar = () => {
             <nav>
             
 
-               <AdminMenu />
+              <AdminMenu /> 
               <SellerMenu />
-               <UserMenu />
+               <UserMenu /> 
             </nav>
           </div>
         </div>
