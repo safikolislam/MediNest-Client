@@ -14,7 +14,7 @@ const ManageMedicines = () => {
   const { data: medicines = [], isLoading } = useQuery({
     queryKey: ['medicines'],
     queryFn: async () => {
-      const res = await fetch('http://localhost:3000/medicines');
+      const res = await fetch('https://medinest-server-psi.vercel.app/medicines');
       return res.json();
     }
   });
@@ -22,7 +22,7 @@ const ManageMedicines = () => {
  
    const mutation = useMutation({
      mutationFn: async (newMedicine) => {
-       const res = await axios.post("http://localhost:3000/medicines", newMedicine);
+       const res = await axios.post("https://medinest-server-psi.vercel.app/medicines", newMedicine);
        return res.data;
      },
      onSuccess: () => {

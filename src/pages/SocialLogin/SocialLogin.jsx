@@ -1,13 +1,29 @@
-import UseAuth from "../../hooks/UseAuth";
+
+import { saveUserInDb } from "../../api/utilitis";
+
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 
 
 const SocialLogin = () => {
-    const {signInWithGoogle} = UseAuth();
+    const {signInWithGoogle} = useAuth();
     const handleGoogleSignIn = ()=>{
             signInWithGoogle()
             .then(result=>{
                 console.log(result.user);
+               const userData = {
+                name:result?.user?.displayName,
+                email:result?.user?.email,
+                image:result?.user?.photoURL,
+               }
+               saveUserInDb(userData)
+                    Swal.fire({
+                                title: 'Success!',
+                                text: 'Successfully signed up ',
+                                icon: 'success',
+                                confirmButtonText: 'Okay',
+                            });
             })
             .catch(error=>{
                 console.log(error);

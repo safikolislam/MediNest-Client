@@ -1,28 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 const Shop = () => {
   const { data: medicines = [], isLoading } = useQuery({
-    queryKey: ['medicines'],
+    queryKey: ["medicines"],
     queryFn: async () => {
-      const res = await fetch('http://localhost:3000/medicines');
-      if (!res.ok) throw new Error('Failed to fetch medicines');
+      const res = await fetch(
+        "https://medinest-server-psi.vercel.app/medicines"
+      );
       return res.json();
-    }
+    },
   });
 
   const [selectedMedicine, setSelectedMedicine] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
 
   const handleView = (medicine) => {
     setSelectedMedicine(medicine);
     setIsModalOpen(true);
-  };
-
-  const handleSelect = (medicine) => {
-    setSelectedItems(prev => [...prev, medicine]);
-    alert(`Selected: ${medicine.name}`);
   };
 
   const closeModal = () => {
@@ -30,68 +26,88 @@ const Shop = () => {
     setSelectedMedicine(null);
   };
 
-  if (isLoading) return <div className="p-6">Loading...</div>;
+  if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="flex p-6 min-h-screen gap-6">
+    <div className="flex p-6 min-h-screen gap-6 bg-gray-50">
       <div className="flex-1">
-        <h2 className="text-2xl font-bold mb-4">All Medicines</h2>
-        <table className="w-full border border-gray-300">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="p-2 border">Name</th>
-              <th className="p-2 border">Price</th>
-              <th className="p-2 border">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {medicines.map((med) => (
-              <tr key={med.id} className="border-t">
-                <td className="p-2 border">{med.name}</td>
-                <td className="p-2 border">${parseFloat(med.price).toFixed(2)}</td>
-                <td className="p-2 border space-x-2">
-                  <button
-                    className="bg-blue-500 text-white px-3 py-1 rounded"
-                    onClick={() => handleView(med)}
-                  >
-                    👁 View
-                  </button>
-                  <button
-                    className="bg-green-500 text-white px-3 py-1 rounded"
-                    onClick={() => handleSelect(med)}
-                  >
-                    ➕ Select
-                  </button>
-                </td>
+        <h2 className="text-3xl font-bold mb-6 text-gray-800">
+          All Medicines
+        </h2>
+
+        <div className="overflow-hidden rounded-lg shadow-lg">
+          <table className="w-full border border-gray-200">
+            <thead>
+              <tr className="bg-gradient-to-r from-green-500 to-blue-500 text-white text-left">
+                <th className="p-3">Name</th>
+                <th className="p-3">Price</th>
+                <th className="p-3">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {medicines.map((med, index) => (
+                <tr
+                  key={med.id}
+                  className={`transition duration-200 ${
+                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                  } hover:bg-green-50`}
+                >
+                  <td className="p-3 border-t font-medium text-gray-700">
+                    {med.name}
+                  </td>
+                  <td className="p-3 border-t text-gray-600">
+                    ${parseFloat(med.price).toFixed(2)}
+                  </td>
+                  <td className="p-3 border-t space-x-2">
+                    <button
+                      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg shadow-sm transition"
+                      onClick={() => handleView(med)}
+                    >
+                      👁 View
+                    </button>
+                    <button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg shadow-sm transition">
+                      ➕ Select
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
+      {/* Modal */}
       {isModalOpen && selectedMedicine && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-96 relative">
+          <div className="bg-white p-6 rounded-2xl shadow-2xl w-96 relative animate-fadeIn">
             <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-black"
+              className="absolute top-3 right-3 text-gray-500 hover:text-black"
               onClick={closeModal}
             >
               ✖
             </button>
-            <h3 className="text-xl font-semibold mb-2">{selectedMedicine.name}</h3>
+            <h3 className="text-2xl font-semibold mb-3 text-gray-800">
+              {selectedMedicine.name}
+            </h3>
             {selectedMedicine.image ? (
               <img
                 src={selectedMedicine.image}
                 alt={selectedMedicine.name}
-                className="w-full h-40 object-cover mb-3 rounded"
+                className="w-full h-44 object-cover mb-4 rounded-lg"
               />
             ) : (
-              <div className="w-full h-40 bg-gray-200 flex items-center justify-center mb-3 rounded">
+              <div className="w-full h-44 bg-gray-200 flex items-center justify-center mb-4 rounded-lg">
                 <span className="text-gray-500">No Image</span>
               </div>
             )}
-            <p><strong>Price:</strong> ${parseFloat(selectedMedicine.price).toFixed(2)}</p>
-            <p><strong>Description:</strong> {selectedMedicine.description}</p>
+            <p className="text-gray-700 mb-2">
+              <strong>Price:</strong> $
+              {parseFloat(selectedMedicine.price).toFixed(2)}
+            </p>
+            <p className="text-gray-600">
+              <strong>Description:</strong>{" "}
+              {selectedMedicine.description || "No description available."}
+            </p>
           </div>
         </div>
       )}
@@ -100,6 +116,7 @@ const Shop = () => {
 };
 
 export default Shop;
+
 
 
 

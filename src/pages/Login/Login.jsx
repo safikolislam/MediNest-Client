@@ -1,18 +1,34 @@
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
-import UseAuth from '../../hooks/UseAuth';
+
 import image from '../../assets/pharmacyImage.avif'
+
+import Swal from 'sweetalert2';
+ import { saveUserInDb } from '../../api/utilitis';
+import useAuth from '../../hooks/useAuth';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { signIn } = UseAuth(); 
+  const { signIn } = useAuth(); 
 
   const onSubmit = data => {
     console.log(data);
     signIn(data.email, data.password)
       .then(result => {
-        console.log(result.user);
+      
+        const userData = {
+          name:result?.user?.displayName,
+          email:result?.user?.email,
+          image:result?.user?.photoURL,
+        }
+        saveUserInDb(userData)
+           Swal.fire({
+                       title: 'Success!',
+                       text: 'Successfully signed up ',
+                       icon: 'success',
+                       confirmButtonText: 'Okay',
+                   });
       })
       .catch(error => {
         console.error(error);
