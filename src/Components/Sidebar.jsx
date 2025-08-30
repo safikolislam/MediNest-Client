@@ -8,10 +8,23 @@ import logo from '../assets/MedicineLogo.png';
 import UserMenu from './Menu/UserMenu';
 import useAuth from '../hooks/useAuth';
 import useRole from '../hooks/useRole';
+import toast from 'react-hot-toast';
+
 
 
 const Sidebar = () => {
   const { logOut } = useAuth(); 
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      toast.success("You have been logged out!");
+    } catch (error) {
+      
+      toast.error("Logout failed. Please try again.");
+    }
+  };
+
   const [isActive, setIsActive] = useState(false);
  
   const [role,isRoleLoading] = useRole()
@@ -72,7 +85,7 @@ const Sidebar = () => {
         <div>
           <hr />
           <button
-            onClick={logOut}
+            onClick={handleLogout}
             className='flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300 hover:text-gray-700 transition-colors duration-300 transform'
           >
             <GrLogout className='w-5 h-5' />

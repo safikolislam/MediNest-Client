@@ -36,7 +36,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-36  p-8">
+    <div className="mt-30 flex flex-col md:flex-row items-center justify-center gap-36  p-8">
 
       <div className="lg:w-[500px] bg-white p-6 rounded-lg shadow-md">
         <form onSubmit={handleSubmit(onSubmit)}>

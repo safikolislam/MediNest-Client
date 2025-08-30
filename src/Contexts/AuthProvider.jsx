@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { AuthContext } from './AuthContext';
+import React, { useEffect, useState } from "react";
+import { AuthContext } from "./AuthContext";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -8,9 +8,8 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
-} from 'firebase/auth';
-import { auth } from '../firebase/firebase.init';
-
+} from "firebase/auth";
+import { auth } from "../firebase/firebase.init";
 
 
 const googleProvider = new GoogleAuthProvider();
@@ -18,7 +17,54 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cart, setCart] = useState([]);
 
+
+const addToCart = (medicine) => {
+  setCart((prevCart) => {
+    const existingItemIndex = prevCart.findIndex(
+      (item) => item._id === medicine._id
+    );
+
+    if (existingItemIndex !== -1) {
+     
+      const updatedCart = [...prevCart];
+      updatedCart[existingItemIndex].quantity += 1;
+      return updatedCart;
+    } else {
+    
+      return [...prevCart, { ...medicine, quantity: 1 }];
+    }
+  });
+};
+
+
+  const removeFromCart = (_id) => {
+    setCart((prevCart) => prevCart.filter((item) => item._id !== _id));
+  };
+
+
+  const clearCart = () => {
+    setCart([]);
+  };
+
+
+  const updateQuantity = (_id, newQuantity) => {
+    if (newQuantity < 1) return; 
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item._id === _id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+ 
+  const totalPrice = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+ 
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -28,44 +74,50 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
-  const signInWithGoogle =()=>{
-    setLoading(true);
-    return signInWithPopup(auth,googleProvider,)
-  }
 
-  const updateUserProfile= profileInfo =>{
-    return updateProfile(auth.currentUser,profileInfo)
-  }
-     const updateUser=(updatedData)=>{
-    return updateProfile(auth.currentUser,updatedData)
-   }
+  const signInWithGoogle = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
+
+  const updateUserProfile = (profileInfo) => {
+    return updateProfile(auth.currentUser, profileInfo);
+  };
+
+  const updateUser = (updatedData) => {
+    return updateProfile(auth.currentUser, updatedData);
+  };
 
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
   };
 
+ 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-  
       setLoading(false);
     });
-
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
 
   const authInfo = {
-    updateUser,
     user,
     loading,
     logOut,
     createUser,
-    signInWithGoogle,
     signIn,
-    updateUserProfile
+    signInWithGoogle,
+    updateUserProfile,
+    updateUser,
+    cart,
+    setCart,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    totalPrice,
+    clearCart,
   };
 
   return (

@@ -1,19 +1,19 @@
+import image from "../assets/close-up-doctor-with-stethoscope.jpg"
 
-import Support1 from '../assets/support.png'
 
 const Support = () => {
   return (
-    <section className="healthcare-support-section bg-white py-12 px-6 md:px-20">
-      <h2 className="text-3xl font-bold text-center mb-8 text-green-300">
+    <section className="healthcare-support-section bg-white mt-14 py-12 px-6 md:px-20">
+      <h2 className="text-3xl font-bold text-center mb-10 text-green-300">
         Expert Healthcare Support & Easy Consultations
       </h2>
 
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
         <div>
           <img 
-            src={Support1} 
+            src={image} 
             alt="Online Consultation" 
-            className="w-full rounded shadow-lg"
+            className="w-full h-110 rounded shadow-lg"
           />
         </div>
 
@@ -29,13 +29,7 @@ const Support = () => {
             <li>Secure and confidential communication for your peace of mind</li>
           </ul>
 
-          <div
-            className="inline-block bg-green-600 text-white px-7 py-3 rounded cursor-default select-none"
-            role="button"
-            aria-disabled="true"
-          >
-            Ask a Health Expert
-          </div>
+        
         </div>
       </div>
     </section>

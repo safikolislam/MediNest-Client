@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import LoadingSpinner from "../../Components/LoadingSpinner";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Shop = () => {
   const { data: medicines = [], isLoading } = useQuery({
@@ -12,7 +14,7 @@ const Shop = () => {
       return res.json();
     },
   });
-
+ const {addToCart} = useAuth()
   const [selectedMedicine, setSelectedMedicine] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,11 +27,16 @@ const Shop = () => {
     setIsModalOpen(false);
     setSelectedMedicine(null);
   };
+    const handleAddToCart = (medicine) => {
+    addToCart(medicine);
+    toast.success(`${medicine.name} added to cart 🛒`); 
+  };
+
 
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="flex p-6 min-h-screen gap-6 bg-gray-50">
+    <div className="flex p-6 min-h-screen gap-6 bg-gray-50 mt-5">
       <div className="flex-1">
         <h2 className="text-3xl font-bold mb-6 text-gray-800">
           All Medicines
@@ -39,25 +46,30 @@ const Shop = () => {
           <table className="w-full border border-gray-200">
             <thead>
               <tr className="bg-gradient-to-r from-green-500 to-blue-500 text-white text-left">
+                <th className="p-3">Image</th>
                 <th className="p-3">Name</th>
                 <th className="p-3">Price</th>
                 <th className="p-3">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {medicines.map((med, index) => (
+              {medicines.map((med, id) => (
                 <tr
                   key={med.id}
                   className={`transition duration-200 ${
-                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                    id % 2 === 0 ? "bg-gray-50" : "bg-white"
                   } hover:bg-green-50`}
                 >
+                      <td className="p-3 border-t font-medium text-gray-700">
+                    <img className="h-12 w-12 object-cover rounded" src={med.image}></img>
+                  </td>
                   <td className="p-3 border-t font-medium text-gray-700">
                     {med.name}
                   </td>
                   <td className="p-3 border-t text-gray-600">
                     ${parseFloat(med.price).toFixed(2)}
                   </td>
+                 
                   <td className="p-3 border-t space-x-2">
                     <button
                       className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg shadow-sm transition"
@@ -65,7 +77,7 @@ const Shop = () => {
                     >
                       👁 View
                     </button>
-                    <button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg shadow-sm transition">
+                    <button onClick={()=>handleAddToCart(med)} className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg shadow-sm transition">
                       ➕ Select
                     </button>
                   </td>
@@ -76,7 +88,7 @@ const Shop = () => {
         </div>
       </div>
 
-      {/* Modal */}
+ 
       {isModalOpen && selectedMedicine && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-2xl shadow-2xl w-96 relative animate-fadeIn">
