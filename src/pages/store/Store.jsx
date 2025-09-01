@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 
 const Store = () => {
@@ -83,12 +84,15 @@ const Store = () => {
                     </button>
                   </div>
 
-                  <button
-                    className="mt-3 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
-                    onClick={() => removeFromCart(item._id)}
-                  >
-                    ❌ Remove
-                  </button>
+             <button
+  className="mt-3 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
+  onClick={() => {
+    removeFromCart(item._id);
+    toast.success("Item removed from cart!");
+  }}
+>
+  ❌ Remove
+</button>
                 </div>
               </li>
             ))}
@@ -121,6 +125,42 @@ const Store = () => {
 };
 
 export default Store;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

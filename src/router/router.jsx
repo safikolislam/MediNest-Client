@@ -4,7 +4,7 @@ import {
 import RootLayOuts from "../layOuts/RootLayOuts";
 import Home from "../pages/Home/Home";
 import Shop from "../pages/Shop/Shop";
-import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
+
 import SignUp from "../pages/SignUp/SignUp";
 import Login from "../pages/Login/Login";
 import DashboardLayout from "../layOuts/DashboardLayOut";
@@ -19,6 +19,9 @@ import Reports from "../pages/Admin/report/Reports";
 import BannerAds from "../pages/Admin/bannerAds/BannerAds";
 import Store from "../pages/store/Store";
 import PrivateRoute from "./PrivateRoute";
+import CheckOut from "../pages/checkOut/CheckOut";
+import Invoice from "../pages/invoice/Invoice";
+import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +52,14 @@ export const router = createBrowserRouter([
         path: "store",
         element: <Store />,
       },
+      {
+        path:"checkOut",
+        element:<CheckOut></CheckOut>
+      },
+      {
+        path:"invoice",
+        element:<Invoice></Invoice>
+      }
     ],
   },
   {
