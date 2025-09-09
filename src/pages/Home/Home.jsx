@@ -4,9 +4,13 @@ import Support from '../../Components/Support';
 import CategorySection from '../../Components/CategorySection';
 
 
+
+
+
 const Home = () => {
     return (
         <div>
+            
             <CategorySection></CategorySection>
           <Support></Support>
            <FAQ></FAQ>

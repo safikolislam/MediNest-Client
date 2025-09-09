@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import {
@@ -10,6 +11,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.init";
+import axios from "axios";
 
 
 const googleProvider = new GoogleAuthProvider();
@@ -94,13 +96,33 @@ const addToCart = (medicine) => {
   };
 
  
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    console.log("CurrentUser -->", currentUser?.email);
+
+    if (currentUser?.email) {
       setUser(currentUser);
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, []);
+
+      const existingToken = localStorage.getItem("access-token");
+
+      if (!existingToken) {
+        const { data } = await axios.post(
+          `${import.meta.env.VITE_API_URL}/jwt`,
+          { email: currentUser?.email }
+        );
+
+        localStorage.setItem("access-token", data.token);
+      }
+    } else {
+      setUser(null);
+      localStorage.removeItem("access-token");
+    }
+
+    setLoading(false);
+  });
+
+  return () => unsubscribe();
+}, []);
 
   const authInfo = {
     user,
@@ -128,3 +150,4 @@ const addToCart = (medicine) => {
 };
 
 export default AuthProvider;
+

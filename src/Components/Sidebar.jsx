@@ -9,6 +9,7 @@ import UserMenu from './Menu/UserMenu';
 import useAuth from '../hooks/useAuth';
 import useRole from '../hooks/useRole';
 import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 
 
@@ -16,19 +17,30 @@ const Sidebar = () => {
   const { logOut } = useAuth(); 
 
   const handleLogout = async () => {
-    try {
-      await logOut();
-      toast.success("You have been logged out!");
-    } catch (error) {
-      
-      toast.error("Logout failed. Please try again.");
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You will be logged out of your account!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await logOut();
+          toast.success("You have been logged out!");
+        } catch (error) {
+          toast.error("Logout failed. Please try again.");
+        }
+      }
+    });
   };
 
   const [isActive, setIsActive] = useState(false);
  
   const [role,isRoleLoading] = useRole()
-  console.log(role,isRoleLoading);
+  console.log(isRoleLoading);
   const handleToggle = () => {
     setIsActive(!isActive);
   };
@@ -63,7 +75,7 @@ const Sidebar = () => {
       >
         <div>
           <div>
-            <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-lime-100 mx-auto'>
+            <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-green-100 mx-auto'>
               <Link to="/">
                 <img                
                   src={logo}

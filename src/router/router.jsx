@@ -8,7 +8,7 @@ import Shop from "../pages/Shop/Shop";
 import SignUp from "../pages/SignUp/SignUp";
 import Login from "../pages/Login/Login";
 import DashboardLayout from "../layOuts/DashboardLayOut";
-import SellerHome from "../pages/Seller/SellerHome/SellerHome";
+
 import ManageMedicine from "../pages/Seller/ManageMedicine/ManageMedicine";
 import PaymentHistory from "../pages/Seller/PaymentHistory/PaymentHistory";
 import Advertisement from "../pages/Seller/Advertisement/Advertisement";
@@ -22,6 +22,14 @@ import PrivateRoute from "./PrivateRoute";
 import CheckOut from "../pages/checkOut/CheckOut";
 import Invoice from "../pages/invoice/Invoice";
 import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
+import SellerRoute from "./SellerRoute";
+import AdminRoute from "./AdminRoute";
+import Statistics from "../shared/Statistics";
+import MakePayment from "../pages/User/MakePayment/MakePayment";
+import UserPaymentHistory from "../pages/User/UserPaymentHistory/UserPaymentHistory";
+
+
+
 
 export const router = createBrowserRouter([
   {
@@ -74,7 +82,10 @@ export const router = createBrowserRouter([
         index: true,
         element: (
           <PrivateRoute>
-            <SellerHome />
+         
+             <Statistics></Statistics>
+          
+            
           </PrivateRoute>
         ),
       },
@@ -82,7 +93,8 @@ export const router = createBrowserRouter([
         path: "ManageMedicine",
         element: (
           <PrivateRoute>
-            <ManageMedicine />
+            <SellerRoute><ManageMedicine /></SellerRoute>
+            
           </PrivateRoute>
         ),
       },
@@ -90,7 +102,10 @@ export const router = createBrowserRouter([
         path: "PaymentHistory",
         element: (
           <PrivateRoute>
-            <PaymentHistory />
+            <SellerRoute>
+         <PaymentHistory />
+            </SellerRoute>
+         
           </PrivateRoute>
         ),
       },
@@ -98,15 +113,22 @@ export const router = createBrowserRouter([
         path: "Advertisement",
         element: (
           <PrivateRoute>
-            <Advertisement />
+            <SellerRoute>
+         <Advertisement />
+            </SellerRoute>
+           
           </PrivateRoute>
         ),
       },
+
       {
         path: "ManageUsers",
         element: (
           <PrivateRoute>
-            <ManageUsers />
+            <AdminRoute>
+             <ManageUsers />
+            </AdminRoute>
+          
           </PrivateRoute>
         ),
       },
@@ -114,7 +136,10 @@ export const router = createBrowserRouter([
         path: "ManageCategories",
         element: (
           <PrivateRoute>
-            <ManageCategories />
+            <AdminRoute>
+              <ManageCategories />
+            </AdminRoute>
+          
           </PrivateRoute>
         ),
       },
@@ -122,7 +147,10 @@ export const router = createBrowserRouter([
         path: "payment",
         element: (
           <PrivateRoute>
-            <Payment />
+            <AdminRoute>
+                <Payment />
+            </AdminRoute>
+           
           </PrivateRoute>
         ),
       },
@@ -130,7 +158,10 @@ export const router = createBrowserRouter([
         path: "report",
         element: (
           <PrivateRoute>
-            <Reports />
+            <AdminRoute>
+                <Reports />
+            </AdminRoute>
+          
           </PrivateRoute>
         ),
       },
@@ -138,10 +169,28 @@ export const router = createBrowserRouter([
         path: "bannerAds",
         element: (
           <PrivateRoute>
-            <BannerAds />
+            <AdminRoute>
+          <BannerAds />
+            </AdminRoute>
+           
           </PrivateRoute>
         ),
       },
+      {
+        path:"MakePayment",
+        element:(
+          <PrivateRoute>
+            <MakePayment></MakePayment>
+          </PrivateRoute>
+        )
+      },
+      {
+        path:"UserPaymentHistory",
+        element:(<PrivateRoute>
+         <UserPaymentHistory></UserPaymentHistory>
+        </PrivateRoute>
+        )
+      }
     ],
   },
 ]);

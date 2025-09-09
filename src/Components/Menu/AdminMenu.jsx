@@ -5,7 +5,7 @@ import MenuItem from './MenuItem'
 const AdminMenu = () => {
   return (
     <>
-      <MenuItem icon={MdDashboard} label='Admin Home' address='/dashboard' />
+      <MenuItem icon={MdDashboard} label=' Home' address='/dashboard' />
       <MenuItem icon={FaUsers} label='Manage Users' address='/dashboard/ManageUsers' />
       <MenuItem icon={MdCategory} label='Manage Categories' address='/dashboard/ManageCategories' />
       <MenuItem icon={MdPayment} label='Payment Management' address='/dashboard/payment' />

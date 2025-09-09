@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PaymentH = () => {
+const UserPaymentHistory = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const PaymentH = () => {
     );
 };
 
-export default PaymentH;
+export default UserPaymentHistory;

@@ -22,7 +22,7 @@ const Invoice = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center py-10 relative">
+    <div className="mt-30 min-h-screen bg-gray-100 flex justify-center items-center py-10 relative">
    
       {showNotification && (
         <div className="absolute top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg transition">

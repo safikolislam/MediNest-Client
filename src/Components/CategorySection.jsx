@@ -1,4 +1,4 @@
-
+import { Link } from "react-router";
 import painReliefImage from "../assets/pain releif medicine.jpg"; 
 import antibiotic from "../assets/antibiotic.jpg";
 import vitamin from "../assets/vitamin.jpg";
@@ -22,31 +22,35 @@ const categories = [
 const CategorySection = () => {
   return (
     <section className="max-w-6xl mx-auto px-4 py-10 mt-10">
-      <h2 className="text-3xl font-bold text-center mb-10">Shop by Category</h2>
+      <h2 className="text-3xl font-bold text-center text-green-300 mb-10">Shop by Category</h2>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
         {categories.map((cat) => (
-          <div
+          <Link
             key={cat.name}
-            className="
-              cursor-pointer 
-              rounded-xl 
-              overflow-hidden 
-              shadow-lg 
-              transform transition-transform duration-300 
-              hover:scale-105 
-              border-2 border-transparent
-            "
+            to={`/shop?category=${encodeURIComponent(cat.name)}`}
           >
-            <img
-              src={cat.image}
-              alt={cat.name}
-              className="w-full h-40 object-cover"
-            />
-            <div className="p-4 bg-white text-center">
-              <h3 className="text-lg font-semibold">{cat.name}</h3>
+            <div
+              className="
+                cursor-pointer 
+                rounded-xl 
+                overflow-hidden 
+                shadow-lg 
+                transform transition-transform duration-300 
+                hover:scale-105 
+                border-2 border-transparent
+              "
+            >
+              <img
+                src={cat.image}
+                alt={cat.name}
+                className="w-full h-40 object-cover"
+              />
+              <div className="p-4 bg-white text-center">
+                <h3 className="text-lg font-semibold">{cat.name}</h3>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
@@ -54,6 +58,7 @@ const CategorySection = () => {
 };
 
 export default CategorySection;
+
 
 
 

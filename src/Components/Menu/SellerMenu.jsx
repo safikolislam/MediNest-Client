@@ -8,7 +8,7 @@ const SellerMenu = () => {
     <>
       <MenuItem
         icon={MdHome}
-        label='Seller Home'
+        label=' Home'
         address='/dashboard' 
       />
       <MenuItem
