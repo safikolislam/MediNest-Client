@@ -2,8 +2,8 @@ import React from "react";
 
 export default function FAQAccordion() {
   return (
-    <section className="max-w-3xl mx-auto p-4 space-y-2">
-      <h2 className="text-3xl font-bold mb-6 text-green-300 text-center">Frequently Asked Questions</h2>
+    <section className="max-w-7xl mx-auto p-4 space-y-2">
+      <h2 className="text-3xl font-bold mb-6 text-green-500 text-center">Frequently Asked Questions</h2>
 
       <div className="collapse collapse-arrow bg-base-100 border border-base-300">
         <input type="radio" name="faq-accordion" defaultChecked />

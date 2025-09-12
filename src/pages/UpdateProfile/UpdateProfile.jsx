@@ -48,7 +48,7 @@ const UpdateProfile = () => {
       }`;
       const res = await axios.post(imageUploadUrl, formData);
 
-      setProfilePic(res.data.data.display_url); // ✅ imgbb uses display_url
+      setProfilePic(res.data.data.display_url); 
       setMessage('Image uploaded successfully!');
     } catch (error) {
       console.error('Image upload failed:', error);
@@ -111,6 +111,24 @@ const UpdateProfile = () => {
 };
 
 export default UpdateProfile;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     
-    <div className="open-sans-normal">
+    <div className="montserrat-normal">
       <QueryClientProvider client={queryClient}>
       <AuthProvider>
 <RouterProvider router={router}></RouterProvider>
