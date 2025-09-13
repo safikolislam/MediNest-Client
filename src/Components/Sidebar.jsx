@@ -8,8 +8,9 @@ import logo from '../assets/MedicineLogo.png';
 import UserMenu from './Menu/UserMenu';
 import useAuth from '../hooks/useAuth';
 import useRole from '../hooks/useRole';
-import toast from 'react-hot-toast';
+
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 
 
@@ -75,7 +76,7 @@ const Sidebar = () => {
       >
         <div>
           <div>
-            <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-green-200 mx-auto'>
+            <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-green-100 mx-auto'>
               <Link to="/">
                 <img                
                   src={logo}
@@ -89,6 +90,7 @@ const Sidebar = () => {
           <div className='flex flex-col justify-between flex-1 mt-6'>
             <nav>        
              {role=== 'admin' && <AdminMenu></AdminMenu>}
+             
               {role === "seller"  && <SellerMenu />}
               { role ==="user"  && <UserMenu /> }
             </nav>

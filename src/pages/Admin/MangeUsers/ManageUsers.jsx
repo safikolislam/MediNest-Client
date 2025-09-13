@@ -26,7 +26,7 @@ const ManageUsers = () => {
         <div className="py-10">
        
           <div className="mb-8 text-center">
-            <h2 className="text-3xl font-extrabold text-gray-800 tracking-tight">
+            <h2 className="text-3xl font-extrabold text-green-500 tracking-tight">
               Manage Users
             </h2>
             <p className="text-gray-500 mt-2 text-sm">

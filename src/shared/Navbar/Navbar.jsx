@@ -3,8 +3,9 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../Contexts/AuthContext';
-import toast from 'react-hot-toast';
+
 import useAuth from '../../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);

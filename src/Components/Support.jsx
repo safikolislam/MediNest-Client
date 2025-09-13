@@ -2,7 +2,7 @@ import image from "../assets/close-up-doctor-with-stethoscope.jpg";
 
 const Support = () => {
   return (
-    <section className="healthcare-support-section bg-white min-h-screen flex items-center justify-center px-6 md:px-20">
+    <section data-aos="zoom-in" data-aos-duration="6000" className="healthcare-support-section bg-white min-h-screen flex items-center justify-center px-6 md:px-20">
       <div className="max-w-7xl w-full">
         <h2 className="text-3xl font-bold text-center mb-10 text-green-500">
           Expert Healthcare Support & Easy Consultations

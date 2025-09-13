@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useLocation } from "react-router";
 import LoadingSpinner from "../../Components/LoadingSpinner";
 import useAuth from "../../hooks/useAuth";
-import toast from "react-hot-toast";
+
 import { FcPrevious, FcNext } from "react-icons/fc";
+import { toast } from "react-toastify";
 
 function useUrlQuery() {
   return new URLSearchParams(useLocation().search);

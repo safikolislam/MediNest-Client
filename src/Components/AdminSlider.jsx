@@ -7,9 +7,9 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router";
+import { motion } from "framer-motion";
 
-// Custom Arrows
-const NextArrow = ({ className, style, onClick }) => (
+ ({ className, style, onClick }) => (
   <div
     className={`${className} !w-12 !h-12 !bg-white/30 rounded-full flex items-center justify-center shadow-xl hover:bg-white/50 transition-transform duration-300 transform hover:scale-110`}
     style={{ ...style, display: "flex", right: 15, zIndex: 10 }}
@@ -19,7 +19,8 @@ const NextArrow = ({ className, style, onClick }) => (
   </div>
 );
 
-const PrevArrow = ({ className, style, onClick }) => (
+
+ ({ className, style, onClick }) => (
   <div
     className={`${className} !w-12 !h-12 !bg-white/30 rounded-full flex items-center justify-center shadow-xl hover:bg-white/50 transition-transform duration-300 transform hover:scale-110`}
     style={{ ...style, display: "flex", left: 15, zIndex: 10 }}
@@ -97,12 +98,23 @@ const AdminSlider = () => {
 
              
               <div className="relative z-20 w-full flex flex-col md:flex-row items-center justify-between p-6 md:p-16
-                              bg-white/20 backdrop-blur-xl rounded-xl shadow-lg">
+                              bg-white/20  rounded-xl shadow-lg">
               
                 <div className="flex-1 max-w-lg text-white space-y-4 text-center md:text-left">
-                  <h2 className="text-3xl md:text-5xl font-extrabold leading-tight">
-                    {med.name}
-                  </h2>
+               
+        <motion.h2
+          className="text-3xl md:text-5xl font-extrabold leading-tight"
+ 
+     animate={{ color: ["#008000", "#FF0000", "#0000FF", "#000000"] }} 
+          transition={{
+           duration: 4, 
+           ease: "easeInOut", 
+           repeat: Infinity, 
+            repeatType: "loop", 
+  }}
+>
+  {med.name}
+</motion.h2>
 
                   {med.description && (
                     <p className="text-lg md:text-xl font-light">{med.description}</p>
@@ -114,8 +126,8 @@ const AdminSlider = () => {
                         <p className="text-xl md:text-3xl font-bold text-blue-500">
                           ${ (med.price - (med.price * med.discount) / 100).toFixed(2) }
                         </p>
-                        <p className="line-through text-white">${med.price}</p>
-                        <span className=" text-white px-2 py-1 rounded-full text-3xl">
+                        <p className="line-through text-white text-2xl">${med.price}</p>
+                        <span className=" text-red-500 px-2 py-1 rounded-full text-3xl">
                           {med.discount}% OFF
                         </span>
                       </>
@@ -138,7 +150,7 @@ const AdminSlider = () => {
         w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] md:w-[400px] md:h-[400px]
         object-cover
         drop-shadow-2xl
-        transition-transform duration-500 transform hover:scale-105
+        transition-transform duration-500 transform 
         rounded-xl
       "
     />

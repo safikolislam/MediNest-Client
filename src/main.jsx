@@ -5,10 +5,12 @@ import { RouterProvider } from 'react-router'
 import { router } from './router/router'
 import AuthProvider from './Contexts/AuthProvider'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Toaster } from 'react-hot-toast'
 
+import { ToastContainer } from 'react-toastify'
+import 'aos/dist/aos.css';
+import Aos from 'aos';
 const queryClient = new QueryClient();
-
+Aos.init()
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     
@@ -19,6 +21,7 @@ createRoot(document.getElementById('root')).render(
       </AuthProvider>
    </QueryClientProvider>
    </div>
-   <Toaster position="top-right" reverseOrder={false}  ></Toaster>
+   <ToastContainer  position="top-right"
+></ToastContainer>
   </StrictMode>,
 )

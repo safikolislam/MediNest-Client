@@ -5,10 +5,11 @@ import SocialLogin from '../SocialLogin/SocialLogin';
 import image from "../../assets/pharmacyImage.avif";
 import { useState } from 'react';
 import axios from 'axios';
-import toast from 'react-hot-toast';
+
 import Swal from 'sweetalert2';
 import useAuth from '../../hooks/useAuth';
 import { saveUserInDb } from '../../api/utilitis';
+import { toast } from 'react-toastify';
 
 
 const SignUp = () => {

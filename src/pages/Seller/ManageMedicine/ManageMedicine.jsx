@@ -2,33 +2,36 @@ import { useForm } from "react-hook-form";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageMedicines = () => {
   const { register, handleSubmit, reset } = useForm();
   const [modalOpen, setModalOpen] = useState(false);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
 
-   const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
+  const axiosSecure = useAxiosSecure();
 
- 
+  
   const { data: medicines = [], isLoading } = useQuery({
-    queryKey: ['medicines'],
+    queryKey: ["medicines"],
     queryFn: async () => {
-      const res = await fetch('https://medinest-server-psi.vercel.app/medicines');
-      return res.json();
-    }
+      const res = await axiosSecure.get("/medicines");
+      return res.data;
+    },
   });
 
- 
-   const mutation = useMutation({
-     mutationFn: async (newMedicine) => {
-       const res = await axios.post("https://medinest-server-psi.vercel.app/medicines", newMedicine);
-       return res.data;
-     },
-     onSuccess: () => {
-       queryClient.invalidateQueries(['medicines']); 
-     },
-   });
+
+  const mutation = useMutation({
+    mutationFn: async (newMedicine) => {
+      const res = await axiosSecure.post("/medicines", newMedicine);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["medicines"]);
+    },
+  });
+
 
   const handleImageUpload = async (e) => {
     const image = e.target.files[0];
@@ -49,6 +52,7 @@ const ManageMedicines = () => {
     }
   };
 
+ 
   const onSubmit = async (data) => {
     if (!uploadedImageUrl) {
       alert("Please upload an image before submitting.");
@@ -74,6 +78,7 @@ const ManageMedicines = () => {
 
   return (
     <div className="p-6">
+    
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Manage Medicines</h2>
         <button onClick={() => setModalOpen(true)} className="btn bg-green-500">
@@ -81,6 +86,7 @@ const ManageMedicines = () => {
         </button>
       </div>
 
+    
       {isLoading ? (
         <p>Loading medicines...</p>
       ) : (
@@ -120,6 +126,7 @@ const ManageMedicines = () => {
         </div>
       )}
 
+    
       {modalOpen && (
         <dialog open className="modal">
           <div className="modal-box">
@@ -148,12 +155,14 @@ const ManageMedicines = () => {
                 onChange={handleImageUpload}
               />
               <select {...register("category")} className="select select-bordered w-full">
-                <option value="Painkiller">Painkiller</option>
-                <option value="Antibiotic">Antibiotic</option>
-              </select>
-              <select {...register("company")} className="select select-bordered w-full">
-                <option value="Pfizer">Pfizer</option>
-                <option value="Novartis">Novartis</option>
+                <option value="Pain Relief">Pain Relief</option>
+                <option value="Antibiotics">Antibiotics</option>
+                <option value="Vitamins">Vitamins</option>
+                <option value="Cough & Cold">Cough & Cold</option>
+                <option value="Skin Care">Skin Care</option>
+                <option value="Digestive Health">Digestive Health</option>
+                <option value="Diabetes Care">Diabetes Care</option>
+                <option value="Eye & Ear Care">Eye & Ear Care</option>
               </select>
               <select {...register("massUnit")} className="select select-bordered w-full">
                 <option value="Mg">Mg</option>
@@ -196,6 +205,7 @@ const ManageMedicines = () => {
 };
 
 export default ManageMedicines;
+
 
 
 

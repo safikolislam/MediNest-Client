@@ -21,7 +21,7 @@ const categories = [
 
 const CategorySection = () => {
   return (
-    <section className="max-w-7xl  mx-auto px-4 py-10 mt-10">
+    <section  data-aos="fade-right" data-aos-duration="6000"  className="max-w-7xl  mx-auto px-4 py-10 mt-10">
       <h2 className="text-3xl font-bold text-center text-green-500 mb-10">Shop by Category</h2>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">

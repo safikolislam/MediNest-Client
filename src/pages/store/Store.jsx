@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
+
 
 
 const Store = () => {
