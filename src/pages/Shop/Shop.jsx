@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useLocation } from "react-router";
 import LoadingSpinner from "../../Components/LoadingSpinner";
 import useAuth from "../../hooks/useAuth";
-
 import { FcPrevious, FcNext } from "react-icons/fc";
 import { toast } from "react-toastify";
 
@@ -17,18 +16,21 @@ const Shop = () => {
   const query = useUrlQuery();
   const selectedCategory = query.get("category");
 
-  const { data: medicines = [], isLoading } = useQuery({
+  // Fetch medicines
+  const { data: medicinesData, isLoading } = useQuery({
     queryKey: ["medicines"],
     queryFn: async () => {
-      const res = await fetch("https://medinest-server-psi.vercel.app/medicines");
+      const res = await fetch("http://localhost:3000/medicines");
       return res.json();
     },
   });
 
+  // Ensure medicines is always an array
+  const medicines = Array.isArray(medicinesData) ? medicinesData : [];
+
   const { addToCart, user } = useAuth();
   const [selectedMedicine, setSelectedMedicine] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,10 +56,10 @@ const Shop = () => {
 
   if (isLoading) return <LoadingSpinner />;
 
-  // Filtering
+  // --- Filtering ---
   let filteredMedicines = selectedCategory
     ? medicines.filter((m) => m.category === selectedCategory)
-    : medicines;
+    : [...medicines];
 
   if (searchTerm) {
     filteredMedicines = filteredMedicines.filter((m) =>
@@ -65,15 +67,17 @@ const Shop = () => {
     );
   }
 
-  // Sorting
-  filteredMedicines = filteredMedicines.sort((a, b) => {
-    if (sortOption === "priceLow") return a.price - b.price;
-    if (sortOption === "priceHigh") return b.price - a.price;
-    if (sortOption === "discount") return (b.discount || 0) - (a.discount || 0);
-    return 0;
-  });
+  // --- Sorting ---
+  if (Array.isArray(filteredMedicines)) {
+    filteredMedicines.sort((a, b) => {
+      if (sortOption === "priceLow") return a.price - b.price;
+      if (sortOption === "priceHigh") return b.price - a.price;
+      if (sortOption === "discount") return (b.discount || 0) - (a.discount || 0);
+      return 0;
+    });
+  }
 
-  // Pagination
+  // --- Pagination ---
   const totalPages = Math.ceil(filteredMedicines.length / ITEMS_PER_PAGE);
   const paginatedMedicines = filteredMedicines.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -145,16 +149,24 @@ const Shop = () => {
                       alt={med.name}
                     />
                   </td>
-                  <td className="p-3 border-t font-medium text-gray-800">{med.name}</td>
-                  <td className="p-3 border-t text-gray-600">${med.price.toFixed(2)}</td>
+                  <td className="p-3 border-t font-medium text-gray-800">
+                    {med.name}
+                  </td>
+                  <td className="p-3 border-t text-gray-600">
+                    ${med.price.toFixed(2)}
+                  </td>
                   <td className="p-3 border-t text-gray-600">
                     {med.discount ? (
-                      <span className="text-red-500 font-semibold">{med.discount}%</span>
+                      <span className="text-red-500 font-semibold">
+                        {med.discount}%
+                      </span>
                     ) : (
                       "—"
                     )}
                   </td>
-                  <td className="p-3 border-t text-green-700 font-semibold">${finalPrice}</td>
+                  <td className="p-3 border-t text-green-700 font-semibold">
+                    ${finalPrice}
+                  </td>
                   <td className="p-3 border-t space-x-2">
                     <button
                       className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg shadow transition"
@@ -176,7 +188,7 @@ const Shop = () => {
         </table>
       </div>
 
-      {/* Pagination - Previous / Next + Page number */}
+      {/* Pagination */}
       <div className="flex justify-center mt-6 gap-4 items-center">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
@@ -190,7 +202,6 @@ const Shop = () => {
           <FcPrevious /> Previous
         </button>
 
-        {/* Page number as text */}
         <span className="px-4 py-2 text-green-600 font-semibold">
           Page {currentPage} of {totalPages}
         </span>
@@ -253,6 +264,8 @@ const Shop = () => {
 };
 
 export default Shop;
+
+
 
 
 

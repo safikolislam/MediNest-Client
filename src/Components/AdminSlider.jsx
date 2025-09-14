@@ -85,7 +85,7 @@ const AdminSlider = () => {
     return <div className="text-center p-10 rounded-lg">No slides available.</div>;
 
   return (
-    <div className="mt-10 mb-5 w-full py-12 font-sans bg-gray-50">
+    <div className="mt-20 mb-20">
       <div className="max-w-7xl mx-auto rounded-xl shadow-2xl overflow-hidden relative">
         <Slider {...settings}>
           {medicines.map((med) => (
@@ -117,7 +117,7 @@ const AdminSlider = () => {
 </motion.h2>
 
                   {med.description && (
-                    <p className="text-lg md:text-xl font-light">{med.description}</p>
+                    <p className="text-lg md:text-xl font-light text-gray-600">{med.description}</p>
                   )}
 
                   <div className="flex flex-wrap items-center gap-4 justify-center md:justify-start">
@@ -167,6 +167,52 @@ const AdminSlider = () => {
 };
 
 export default AdminSlider;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

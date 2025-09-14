@@ -35,26 +35,27 @@ const UpdateProfile = () => {
     }
   };
 
-  const handleImageUpload = async (e) => {
-    const image = e.target.files[0];
-    if (!image) return;
+const handleImageUpload = async (e) => {
+  const image = e.target.files[0];
+  if (!image) return;
 
-    const formData = new FormData();
-    formData.append('image', image);
+  const formData = new FormData();
+  formData.append('file', image); // must be 'file', not 'image'
+  formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
 
-    try {
-      const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${
-        import.meta.env.VITE_image_upload_key
-      }`;
-      const res = await axios.post(imageUploadUrl, formData);
+  try {
+    const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_NAME}/image/upload`;
 
-      setProfilePic(res.data.data.display_url); 
-      setMessage('Image uploaded successfully!');
-    } catch (error) {
-      console.error('Image upload failed:', error);
-      setMessage('Image upload failed.');
-    }
-  };
+    const res = await axios.post(cloudinaryUrl, formData);
+
+    setProfilePic(res.data.secure_url);
+    setMessage('Image uploaded successfully!');
+  } catch (error) {
+    console.error('Image upload failed:', error);
+    setMessage('Image upload failed.');
+  }
+};
+
 
   return (
     <div className="mt-20 flex flex-col md:flex-row items-center justify-center gap-36 p-8">

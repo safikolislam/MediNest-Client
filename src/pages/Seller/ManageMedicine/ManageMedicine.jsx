@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import axios from "axios";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { toast } from "react-toastify";
 
 const ManageMedicines = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -33,24 +34,34 @@ const ManageMedicines = () => {
   });
 
 
-  const handleImageUpload = async (e) => {
-    const image = e.target.files[0];
-    if (!image) return;
+const handleImageUpload = async (e) => {
+  const imageFile = e.target.files[0];
+  if (!imageFile) return;
 
+  try {
     const formData = new FormData();
-    formData.append("image", image);
+    formData.append("file", imageFile);
+    formData.append("upload_preset", import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
 
-    try {
-      const res = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`,
-        formData
-      );
-      setUploadedImageUrl(res.data.data.url);
-    } catch (error) {
-      console.error("Image upload failed:", error);
-      alert("Failed to upload image");
-    }
-  };
+    const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_NAME}/image/upload`;
+    
+    // Use axios to post the image data to Cloudinary
+    const res = await axios.post(cloudinaryUrl, formData);
+    
+    // Set the uploaded image URL to state
+    setUploadedImageUrl(res.data.secure_url);
+    
+    // Provide a success message to the user
+    toast.success("Image uploaded!");
+
+  } catch (error) {
+    console.error(error);
+    // Provide a user-friendly error message
+    toast.error("Image upload failed.");
+    setUploadedImageUrl(""); // Clear the URL on failure
+  }
+};
+
 
  
   const onSubmit = async (data) => {
@@ -205,6 +216,28 @@ const ManageMedicines = () => {
 };
 
 export default ManageMedicines;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

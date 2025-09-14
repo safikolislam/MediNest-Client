@@ -1,42 +1,48 @@
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
-
-import image from '../../assets/pharmacyImage.avif'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import image from '../../assets/pharmacyImage.avif';
 
 import Swal from 'sweetalert2';
- import { saveUserInDb } from '../../api/utilitis';
+import { saveUserInDb } from '../../api/utilitis';
 import useAuth from '../../hooks/useAuth';
+import { useState } from 'react';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { signIn } = useAuth(); 
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const onSubmit = data => {
     console.log(data);
     signIn(data.email, data.password)
       .then(result => {
-      
         const userData = {
-          name:result?.user?.displayName,
-          email:result?.user?.email,
-          image:result?.user?.photoURL,
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+          image: result?.user?.photoURL,
         }
-        saveUserInDb(userData)
-           Swal.fire({
-                       title: 'Success!',
-                       text: 'Successfully signed up ',
-                       icon: 'success',
-                       confirmButtonText: 'Okay',
-                   });
+        saveUserInDb(userData);
+        Swal.fire({
+          title: 'Success!',
+          text: 'Successfully signed up',
+          icon: 'success',
+          confirmButtonText: 'Okay',
+        });
       })
       .catch(error => {
         console.error(error);
       });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
-    <div className="mt-30 flex flex-col md:flex-row items-center justify-center gap-36  p-8">
+    <div className="mt-30 flex flex-col md:flex-row items-center justify-center gap-36 p-8">
 
       <div className="lg:w-[500px] bg-white p-6 rounded-lg shadow-md">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -55,17 +61,25 @@ const Login = () => {
             )}
 
             <label className="label mt-4">Password</label>
-            <input
-              type="password"
-              {...register("password", { required: true, minLength: 6 })}
-              className="input input-bordered w-full"
-              placeholder="Password"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                {...register("password", { required: true, minLength: 6 })}
+                className="input input-bordered w-full pr-10"
+                placeholder="Password"
+              />
+              <span
+                className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-500"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+              </span>
+            </div>
             {errors.password?.type === 'required' && (
               <p className="text-red-500 text-sm">Password is required</p>
             )}
             {errors.password?.type === 'minLength' && (
-              <p className="text-red-500 text-sm">Password must be at least 6 characters</p>
+              <p className="text-red-500 text-sm">Password must be at least 6 characters long</p>
             )}
 
             <div className="mt-2">
@@ -100,4 +114,8 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
 

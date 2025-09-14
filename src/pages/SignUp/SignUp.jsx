@@ -1,44 +1,40 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router'; 
 import SocialLogin from '../SocialLogin/SocialLogin';
-
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import image from "../../assets/pharmacyImage.avif";
-import { useState } from 'react';
 import axios from 'axios';
-
 import Swal from 'sweetalert2';
 import useAuth from '../../hooks/useAuth';
 import { saveUserInDb } from '../../api/utilitis';
 import { toast } from 'react-toastify';
 
-
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { createUser, updateUserProfile } = useAuth();
     const [profilePic, setProfilePic] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit = async (data) => {
         try {
-            
             const result = await createUser(data.email, data.password);
-
-          
             const userProfile = {
                 displayName: data.username,
                 photoURL: profilePic,
             };
-
             await updateUserProfile(userProfile);
-               const userData = {
-                          name:result?.user?.displayName,
-                          email:result?.user?.email,
-                          image:result?.user?.photoURL,
-                         }
-                         saveUserInDb(userData)
-   
+            const userData = {
+                name: result?.user?.displayName,
+                email: result?.user?.email,
+                image: result?.user?.photoURL,
+                role: data.role,
+            };
+            saveUserInDb(userData);
+
             Swal.fire({
                 title: 'Success!',
-                text: 'Successfully signed up ',
+                text: 'Successfully signed up',
                 icon: 'success',
                 confirmButtonText: 'Okay',
             });
@@ -50,23 +46,30 @@ const SignUp = () => {
         }
     };
 
-    const handleImageUpload = async (e) => {
-        const imageFile = e.target.files[0];
-        if (!imageFile) return;
+const handleImageUpload = async (e) => {
+  const imageFile = e.target.files[0];
+  if (!imageFile) return;
 
-        try {
-            const formData = new FormData();
-            formData.append('image', imageFile);
+  try {
+    const formData = new FormData();
+    formData.append("file", imageFile);
+    formData.append("upload_preset", import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
 
-            const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`;
-            const res = await axios.post(imageUploadUrl, formData);
+    const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_NAME}/image/upload`;
+    
+    const res = await axios.post(cloudinaryUrl, formData);
+    
+    setProfilePic(res.data.secure_url);
+    toast.success("Image uploaded!");
+  } catch (error) {
+    console.error(error);
+    toast.error("Image upload failed.");
+  }
+};
 
-            setProfilePic(res.data.data.url);
-            toast.success("Image uploaded!");
-        } catch (error) {
-            console.error(error);
-            toast.error("Image upload failed.");
-        }
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -98,12 +101,20 @@ const SignUp = () => {
                         )}
 
                         <label className="label mt-4">Password</label>
-                        <input
-                            type="password"
-                            {...register("password", { required: true, minLength: 6 })}
-                            className="input input-bordered w-full"
-                            placeholder="Password"
-                        />
+                        <div className="relative">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                {...register("password", { required: true, minLength: 6 })}
+                                className="input input-bordered w-full pr-10"
+                                placeholder="Password"
+                            />
+                            <span
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-500"
+                                onClick={togglePasswordVisibility}
+                            >
+                                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+                            </span>
+                        </div>
                         {errors.password?.type === 'required' && (
                             <p className="text-red-500 text-sm">Password is required</p>
                         )}
@@ -163,6 +174,7 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
 
 
 

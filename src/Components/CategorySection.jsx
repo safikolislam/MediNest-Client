@@ -1,63 +1,70 @@
-import { Link } from "react-router";
-import painReliefImage from "../assets/pain releif medicine.jpg"; 
-import antibiotic from "../assets/antibiotic.jpg";
-import vitamin from "../assets/vitamin.jpg";
-import cold from "../assets/cold and cough.jpg";
-import skin from "../assets/skin care.jpg";
-import digestive from "../assets/digestive.jpg";
-import diabetes from "../assets/diabates.jpg";
-import eye from "../assets/eye.jpg";
-
-const categories = [
-  { name: "Pain Relief", image: painReliefImage },
-  { name: "Antibiotics", image: antibiotic },
-  { name: "Vitamins", image: vitamin },
-  { name: "Cough & Cold", image: cold },
-  { name: "Skin Care", image: skin },
-  { name: "Digestive Health", image: digestive },
-  { name: "Diabetes Care", image: diabetes },
-  { name: "Eye & Ear Care", image: eye },
-];
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 const CategorySection = () => {
-  return (
-    <section  data-aos="fade-right" data-aos-duration="6000"  className="max-w-7xl  mx-auto px-4 py-10 mt-10">
-      <h2 className="text-3xl font-bold text-center text-green-500 mb-10">Shop by Category</h2>
+  const navigate = useNavigate();
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-        {categories.map((cat) => (
-          <Link
-            key={cat.name}
-            to={`/shop?category=${encodeURIComponent(cat.name)}`}
-          >
-            <div
-              className="
-                cursor-pointer 
-                rounded-xl 
-                overflow-hidden 
-                shadow-lg 
-                transform transition-transform duration-300 
-                hover:scale-105 
-                border-2 border-transparent
-              "
-            >
-              <img
-                src={cat.image}
-                alt={cat.name}
-                className="w-full h-40 object-cover"
-              />
-              <div className="p-4 bg-white text-center">
-                <h3 className="text-lg font-semibold">{cat.name}</h3>
+  // Fetch categories
+  const { data: categories = [], isLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:3000/categories");
+      console.log(res.data);
+      return res.data; 
+    },
+  });
+
+  if (isLoading) {
+    return <p className="text-center py-10 text-lg">Loading categories...</p>;
+  }
+
+  const handleCategoryClick = (categoryName) => {
+    navigate(`/shop?category=${categoryName}`);
+  };
+
+  return (
+    <div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-4xl font-extrabold text-center text-green-500 mb-12">
+          Explore Our Categories
+        </h2>
+        {categories.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {categories.map((category) => (
+              <div
+                key={category._id}
+                className="bg-white rounded-2xl shadow-xl overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-2xl group cursor-pointer"
+                onClick={() => handleCategoryClick(category.categoryName)}
+              >
+                <div className="relative w-full h-72 overflow-hidden">
+                  <img
+                    src={category.categoryImage}
+                    alt={category.categoryName}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                <div className="p-6 text-center">
+                  <h3 className="text-2xl font-bold text-gray-800">
+                    {category.categoryName}
+                  </h3>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-500 text-lg">
+            No categories found.
+          </p>
+        )}
       </div>
-    </section>
+    </div>
   );
 };
 
 export default CategorySection;
+
 
 
 

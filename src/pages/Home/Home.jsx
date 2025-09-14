@@ -3,6 +3,7 @@ import FAQ from '../../Components/FAQ';
 import Support from '../../Components/Support';
 import CategorySection from '../../Components/CategorySection';
 import AdminSlider from '../../Components/AdminSlider';
+import DiscountProducts from '../../Components/DiscountProducts';
 
 
 
@@ -16,6 +17,8 @@ const Home = () => {
         <div>
          <AdminSlider></AdminSlider>
             <CategorySection></CategorySection>
+            
+          <DiscountProducts></DiscountProducts>
           <Support></Support>
            <FAQ></FAQ>
         </div>
