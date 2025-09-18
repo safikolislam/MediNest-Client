@@ -35,10 +35,10 @@ const DiscountProducts = () => {
            Products on Discount
         </h2>
         <Swiper
-          modules={[Navigation, Pagination, Autoplay]}
+          modules={[ Pagination, Autoplay]}
           spaceBetween={20}
           slidesPerView={2}
-          navigation
+         
           pagination={{ clickable: true }}
           grabCursor={true}
           autoplay={{

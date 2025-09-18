@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import axios from "axios";
@@ -10,7 +10,7 @@ const CategorySection = () => {
   const { data: categories = [], isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/categories");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/categories`);
       console.log(res.data);
       return res.data; 
     },
@@ -35,7 +35,7 @@ const CategorySection = () => {
             {categories.map((category) => (
               <div
                 key={category._id}
-                className="bg-white rounded-2xl shadow-xl overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-2xl group cursor-pointer"
+                className="bg-white rounded-2xl shadow-xl overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-2xl group cursor-pointer " data-aos="fade-up"
                 onClick={() => handleCategoryClick(category.categoryName)}
               >
                 <div className="relative w-full h-72 overflow-hidden">

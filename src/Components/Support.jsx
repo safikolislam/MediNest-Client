@@ -2,39 +2,59 @@ import image from "../assets/close-up-doctor-with-stethoscope.jpg";
 
 const Support = () => {
   return (
-    <section data-aos="fade-right" data-aos-duration="6000" className="healthcare-support-section bg-white min-h-screen flex items-center justify-center px-6 md:px-20">
-      <div className="max-w-7xl w-full">
-        <h2 className="text-3xl font-bold text-center mb-10 text-green-500">
+    <section data-aos="fade-up" data-aos-duration="1000" className="bg-gradient-to-br from-green-50 to-green-100 py-20 px-6 md:px-20 ">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-16 text-green-700 leading-tight">
           Expert Healthcare Support & Easy Consultations
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-10 items-center">
-          <div>
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div data-aos="zoom-in" data-aos-duration="1200">
             <img
               src={image}
-              alt="Online Consultation"
-              className="w-full h-110 rounded shadow-lg"
+              alt="Online Doctor Consultation"
+              className="w-full h-auto rounded-3xl shadow-2xl transform hover:scale-105 transition-transform duration-500 ease-in-out"
             />
           </div>
 
-          <div className="text-gray-700">
-            <p className="mb-6 text-lg">
+          <div className="text-gray-800">
+            <p className="mb-8 text-lg md:text-xl leading-relaxed">
               At MedExCare, we go beyond medicine sales. Our platform provides
               you with access to expert advice from certified healthcare
               professionals. Whether you have questions about your medications,
               dosage, or health concerns, help is just a click away.
             </p>
 
-            <ul className="list-disc list-inside space-y-3 mb-6">
-              <li>24/7 online chat with licensed pharmacists and doctors</li>
-              <li>Submit your health queries and get quick, reliable answers</li>
-              <li>
-                Get personalized medicine recommendations based on your profile
+            <ul className="space-y-4">
+              <li className="flex items-start">
+                <span className="text-green-500 mr-3 text-xl">&#10003;</span>
+                <p className="text-gray-700 text-base md:text-lg">
+                  <span className="font-semibold">24/7 Online Chat:</span> Connect with licensed pharmacists and doctors anytime, anywhere.
+                </p>
               </li>
-              <li>
-                Secure and confidential communication for your peace of mind
+              <li className="flex items-start">
+                <span className="text-green-500 mr-3 text-xl">&#10003;</span>
+                <p className="text-gray-700 text-base md:text-lg">
+                  <span className="font-semibold">Quick & Reliable Answers:</span> Submit your health queries and get fast, professional responses.
+                </p>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-500 mr-3 text-xl">&#10003;</span>
+                <p className="text-gray-700 text-base md:text-lg">
+                  <span className="font-semibold">Personalized Recommendations:</span> Receive custom medicine and wellness advice based on your profile.
+                </p>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-500 mr-3 text-xl">&#10003;</span>
+                <p className="text-gray-700 text-base md:text-lg">
+                  <span className="font-semibold">Secure & Confidential:</span> All communication is encrypted to ensure your privacy.
+                </p>
               </li>
             </ul>
+
+            <button className="mt-10 bg-green-500 hover:bg-green-600 transition duration-300 ease-in-out text-white font-bold py-4 px-8 rounded-full shadow-lg transform hover:-translate-y-1">
+              Start Your Consultation
+            </button>
           </div>
         </div>
       </div>

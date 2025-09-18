@@ -2,22 +2,23 @@ import { useForm } from 'react-hook-form';
 import { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../Contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 const UpdateProfile = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { user, updateUserProfile } = useContext(AuthContext); 
   const [profilePic, setProfilePic] = useState('');
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+ 
 
   const onSubmit = async (data) => {
     if (!user) {
-      setMessage('No user is logged in.');
+      toast.error('No user is logged in.');
       return;
     }
 
     setLoading(true);
-    setMessage('');
+   
 
     try {
       await updateUserProfile({
@@ -26,10 +27,10 @@ const UpdateProfile = () => {
       });
 
     
-      setMessage('Profile updated successfully!');
+      toast.success('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error);
-      setMessage('Failed to update profile.');
+      toast.error('Failed to update profile.');
     } finally {
       setLoading(false);
     }
@@ -49,10 +50,10 @@ const handleImageUpload = async (e) => {
     const res = await axios.post(cloudinaryUrl, formData);
 
     setProfilePic(res.data.secure_url);
-    setMessage('Image uploaded successfully!');
+    toast.success('Image uploaded successfully!');
   } catch (error) {
     console.error('Image upload failed:', error);
-    setMessage('Image upload failed.');
+     toast.error('Image upload failed.');
   }
 };
 
@@ -63,7 +64,7 @@ const handleImageUpload = async (e) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text-2xl font-semibold mb-4">Update Profile</h2>
 
-          {message && <p className="text-center text-sm mb-4">{message}</p>}
+       
 
           <fieldset className="mb-4">
             <label className="label mt-4">Name</label>
@@ -112,6 +113,40 @@ const handleImageUpload = async (e) => {
 };
 
 export default UpdateProfile;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

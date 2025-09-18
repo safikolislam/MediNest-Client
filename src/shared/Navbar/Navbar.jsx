@@ -116,7 +116,7 @@ const Navbar = () => {
                 bg-green-600 hover:bg-green-700 transition duration-200 shadow-md"
             >
               <FaShoppingCart className="text-white text-lg" />
-              {cart.length > 0 && (
+              { cart.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow">
                   {cart.length}
                 </span>
@@ -255,7 +255,7 @@ const Navbar = () => {
               className="flex items-center gap-2"
             >
               <FaShoppingCart />
-              {cart.length > 0 && (
+              { cart.length > 0 && (
                 <span className="bg-red-500 text-white text-xs font-bold rounded-full px-2 py-0.5">
                   {cart.length}
                 </span>

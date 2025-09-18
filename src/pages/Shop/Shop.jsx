@@ -16,16 +16,16 @@ const Shop = () => {
   const query = useUrlQuery();
   const selectedCategory = query.get("category");
 
-  // Fetch medicines
+ 
   const { data: medicinesData, isLoading } = useQuery({
     queryKey: ["medicines"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:3000/medicines");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/all-medicines`);
       return res.json();
     },
   });
 
-  // Ensure medicines is always an array
+  
   const medicines = Array.isArray(medicinesData) ? medicinesData : [];
 
   const { addToCart, user } = useAuth();
@@ -238,7 +238,8 @@ const Shop = () => {
               className="w-full h-44 object-cover mb-4 rounded-lg shadow"
             />
             <p className="text-gray-700 mb-2">
-              <strong>Price:</strong> ${selectedMedicine.price.toFixed(2)}
+              <strong>Price:</strong> $
+              {selectedMedicine.price ? selectedMedicine.price.toFixed(2) : "N/A"}
             </p>
             {selectedMedicine.discount > 0 && (
               <p className="text-red-600 mb-2">
@@ -247,10 +248,12 @@ const Shop = () => {
             )}
             <p className="text-green-700 mb-2 font-semibold">
               <strong>Final Price:</strong>{" "}
-              {(
-                selectedMedicine.price -
-                (selectedMedicine.price * selectedMedicine.discount) / 100
-              ).toFixed(2)}
+              {selectedMedicine.price
+                ? (
+                    selectedMedicine.price -
+                    (selectedMedicine.price * selectedMedicine.discount) / 100
+                  ).toFixed(2)
+                : "N/A"}
             </p>
             <p className="text-gray-600">
               <strong>Description:</strong>{" "}

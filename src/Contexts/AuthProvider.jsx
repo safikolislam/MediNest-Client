@@ -87,20 +87,29 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-  const updateUserProfile = (profileInfo) => {
-    return updateProfile(auth.currentUser, profileInfo);
-  };
 
-  const updateUser = (updatedData) => {
-    return updateProfile(auth.currentUser, updatedData);
-  };
+
 
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
   };
 
+ const updateUserProfile = async (profileInfo) => {
+    if (auth.currentUser) {
+      setLoading(true);
+    
+      await updateProfile(auth.currentUser, profileInfo);
 
+   
+   
+      setUser((prevUser) => ({
+        ...prevUser,
+        ...profileInfo, 
+      }));
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -139,8 +148,8 @@ const AuthProvider = ({ children }) => {
     createUser,
     signIn,
     signInWithGoogle,
-    updateUserProfile,
-    updateUser,
+  
+   updateUserProfile,
     cart,
     setCart,
     addToCart,
@@ -158,6 +167,178 @@ const AuthProvider = ({ children }) => {
 };
 
 export default AuthProvider;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
