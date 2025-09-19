@@ -1,10 +1,8 @@
-
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const ManageCategories = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -13,10 +11,7 @@ const ManageCategories = () => {
   const queryClient = useQueryClient();
 
   // Fetch categories
-  const {
-    data: categories = [],
-    isLoading: isCategoriesLoading,
-  } = useQuery({
+  const { data: categories = [], isLoading: isCategoriesLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/categories`);
@@ -24,7 +19,7 @@ const ManageCategories = () => {
     },
   });
 
-  // Mutation to add a new category
+  // Add category mutation
   const addCategoryMutation = useMutation({
     mutationFn: async (newCategory) => {
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/categories`, newCategory);
@@ -43,10 +38,10 @@ const ManageCategories = () => {
     },
   });
 
-  // Mutation to delete a category
+  // Delete category mutation
   const deleteCategoryMutation = useMutation({
     mutationFn: async (categoryId) => {
-      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/${categoryId}`);
+      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/categories/${categoryId}`);
       return res.data;
     },
     onSuccess: () => {
@@ -59,24 +54,20 @@ const ManageCategories = () => {
     },
   });
 
-  // ✅ Image upload to Cloudinary
+  // Image upload
   const handleImageUpload = async (e) => {
     const imageFile = e.target.files[0];
     if (!imageFile) return;
 
     const formData = new FormData();
     formData.append('file', imageFile);
-    formData.append(
-      'upload_preset',
-      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
-    );
+    formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
 
     try {
       const res = await axios.post(
         `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_NAME}/image/upload`,
         formData
       );
-
       setUploadedImageUrl(res.data.secure_url);
       Swal.fire('Success!', 'Image uploaded successfully.', 'success');
     } catch (error) {
@@ -85,14 +76,10 @@ const ManageCategories = () => {
     }
   };
 
-  // Handle form submission
+  // Submit form
   const onSubmit = (data) => {
     if (!uploadedImageUrl) {
-      Swal.fire(
-        'Warning!',
-        'Please upload an image before submitting.',
-        'warning'
-      );
+      Swal.fire('Warning!', 'Please upload an image before submitting.', 'warning');
       return;
     }
 
@@ -103,7 +90,7 @@ const ManageCategories = () => {
     addCategoryMutation.mutate(newCategory);
   };
 
-  // Handle delete
+  // Delete handler
   const handleDelete = (categoryId) => {
     Swal.fire({
       title: 'Are you sure?',
@@ -120,9 +107,7 @@ const ManageCategories = () => {
     });
   };
 
-  if (isCategoriesLoading) {
-    return <p>Loading categories...</p>;
-  }
+  if (isCategoriesLoading) return <p>Loading categories...</p>;
 
   return (
     <div className="p-6">
@@ -182,7 +167,7 @@ const ManageCategories = () => {
         </table>
       </div>
 
-      {/* Modal for Add Category */}
+      {/* Add Category Modal */}
       {modalOpen && (
         <dialog open className="modal">
           <div className="modal-box">
@@ -203,9 +188,9 @@ const ManageCategories = () => {
                 <button
                   type="submit"
                   className="btn bg-green-500 text-white"
-                  disabled={addCategoryMutation.isPending}
+                  disabled={addCategoryMutation.isLoading}
                 >
-                  {addCategoryMutation.isPending ? 'Saving...' : 'Save'}
+                  {addCategoryMutation.isLoading ? 'Saving...' : 'Save'}
                 </button>
                 <button
                   type="button"
@@ -228,6 +213,15 @@ const ManageCategories = () => {
 };
 
 export default ManageCategories;
+
+
+
+
+
+
+
+
+
 
 
 

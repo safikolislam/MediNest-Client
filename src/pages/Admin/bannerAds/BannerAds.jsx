@@ -2,7 +2,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-// Toggle switch component
+
 const ToggleSwitch = ({ on, onClick }) => (
   <div
     onClick={onClick}
@@ -22,16 +22,16 @@ const BannerAds = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
-  // Fetch all medicines (admin view)
+
   const { data: medicines = [], isLoading, isError, error } = useQuery({
     queryKey: ["medicines"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/admin/medicines"); // Seller or admin endpoint
+      const res = await axiosSecure.get("/admin/medicines"); 
       return res.data || [];
     },
   });
 
-  // Toggle slider mutation
+
   const toggleMutation = useMutation({
     mutationFn: async ({ id }) => {
       await axiosSecure.patch(`/medicines/${id}/toggle-slider`);

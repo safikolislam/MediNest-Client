@@ -92,6 +92,7 @@ const AuthProvider = ({ children }) => {
 
   const logOut = () => {
     setLoading(true);
+    clearCart();
     return signOut(auth);
   };
 
