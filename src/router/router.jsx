@@ -24,9 +24,10 @@ import Invoice from "../pages/invoice/Invoice";
 import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 import SellerRoute from "./SellerRoute";
 import AdminRoute from "./AdminRoute";
-import Statistics from "../shared/Statistics";
-import MakePayment from "../pages/User/MakePayment/MakePayment";
+
+
 import UserPaymentHistory from "../pages/User/UserPaymentHistory/UserPaymentHistory";
+import DashboardWelcome from "../Components/DashboardWelcome";
 
 
 
@@ -83,7 +84,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
          
-             <Statistics></Statistics>
+           <DashboardWelcome></DashboardWelcome>
           
             
           </PrivateRoute>
@@ -176,14 +177,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path:"MakePayment",
-        element:(
-          <PrivateRoute>
-            <MakePayment></MakePayment>
-          </PrivateRoute>
-        )
-      },
+  
       {
         path:"UserPaymentHistory",
         element:(<PrivateRoute>

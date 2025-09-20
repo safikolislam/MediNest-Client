@@ -2,12 +2,13 @@ import React from "react";
 import Slider from "react-slick";
 import { useQuery } from "@tanstack/react-query";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import useAxiosSecure from "../hooks/useAxiosSecure";
+
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
+import axios from "axios";
 
  ({ className, style, onClick }) => (
   <div
@@ -31,12 +32,12 @@ import { motion } from "framer-motion";
 );
 
 const AdminSlider = () => {
-  const axiosSecure = useAxiosSecure();
+  
 
   const { data: medicines = [], isLoading, isError, error } = useQuery({
     queryKey: ["sliderMedicines"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/slider-medicines");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/slider-medicines`);
       return res.data || [];
     },
   });

@@ -3,6 +3,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import useAuth from '../hooks/useAuth';
 
 const CheckOutForm = ({ totalPrice }) => {
   const stripe = useStripe();
@@ -11,7 +12,7 @@ const CheckOutForm = ({ totalPrice }) => {
   const [cardError, setCardError] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
-
+const {user} = useAuth()
   useEffect(() => {
     if (totalPrice > 0) {
       setProcessing(true);
@@ -54,7 +55,14 @@ const CheckOutForm = ({ totalPrice }) => {
     const { error, paymentIntent } = await stripe.confirmCardPayment(
       clientSecret,
       {
-        payment_method: { card },
+        payment_method: { card ,
+   billing_details:{
+            name:user?.displayName,
+            email:user?.email,
+         }
+
+        },
+       
       }
     );
 
@@ -64,7 +72,25 @@ const CheckOutForm = ({ totalPrice }) => {
       toast.error(error.message || "An unexpected error occurred.");
       setProcessing(false);
     } else if (paymentIntent.status === "succeeded") {
-      toast.success("Payment successful!");
+        //save order data in db 
+        const orderData ={
+           userName: user?.displayName,
+    userEmail: user?.email,
+    transactionId: paymentIntent.id,
+    totalPrice: totalPrice,
+    timestamp:new Date(),
+        }
+      axios.post(`${import.meta.env.VITE_API_URL}/save-order`,orderData)
+     .then((res) => {
+      if (res.data.insertedId) {
+        toast.success("Payment successful and order saved!");
+       
+      }
+    })
+    .catch((error) => {
+      console.error("Error saving order:", error);
+      toast.error("Payment was successful, but the order could not be saved.");
+    });
 
       setProcessing(false);
     } else {
@@ -107,7 +133,7 @@ const CheckOutForm = ({ totalPrice }) => {
         type="submit"
         disabled={!stripe || processing}
       >
-        {processing ? "Processing..." : `Pay $${totalPrice.toFixed(2)}`}
+        {processing ? "Processing..." : `Pay $${Number(totalPrice || 0).toFixed(2)}`}
       </button>
     </form>
   );

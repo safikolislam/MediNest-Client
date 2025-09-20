@@ -21,7 +21,7 @@ createRoot(document.getElementById('root')).render(
       </AuthProvider>
    </QueryClientProvider>
    </div>
-   <ToastContainer  position="top-right"
+   <ToastContainer  position="top-right" autoClose={2000}
 ></ToastContainer>
   </StrictMode>,
 )
