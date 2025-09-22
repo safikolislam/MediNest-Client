@@ -27,7 +27,9 @@ import AdminRoute from "./AdminRoute";
 
 
 import UserPaymentHistory from "../pages/User/UserPaymentHistory/UserPaymentHistory";
-import DashboardWelcome from "../Components/DashboardWelcome";
+
+import Statistics from "../shared/Statistics";
+
 
 
 
@@ -84,7 +86,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
          
-           <DashboardWelcome></DashboardWelcome>
+         <Statistics></Statistics>
           
             
           </PrivateRoute>
@@ -166,6 +168,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+  
       {
         path: "bannerAds",
         element: (

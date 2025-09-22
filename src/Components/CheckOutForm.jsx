@@ -4,15 +4,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router';
 
 const CheckOutForm = ({ totalPrice }) => {
   const stripe = useStripe();
   const elements = useElements();
-
+  const navigate = useNavigate();
   const [cardError, setCardError] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
-const {user} = useAuth()
+   const { user, cart } = useAuth();
+
   useEffect(() => {
     if (totalPrice > 0) {
       setProcessing(true);
@@ -84,7 +86,7 @@ const {user} = useAuth()
      .then((res) => {
       if (res.data.insertedId) {
         toast.success("Payment successful and order saved!");
-       
+        navigate("/invoice", { state: { orderData, cart } });
       }
     })
     .catch((error) => {
