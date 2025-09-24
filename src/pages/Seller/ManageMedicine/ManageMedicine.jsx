@@ -174,7 +174,7 @@ const handleImageUpload = async (e) => {
                 <option value="Pain & Fever Relief">Pain & Fever Relief</option>
                 
                 <option value="Diabetes ">Diabates</option>
-                <option value=" Ear Care"> Ear Care</option>
+                <option value=" Eye Care"> Eye Care</option>
               </select>
               <select {...register("massUnit")} className="select select-bordered w-full">
                 <option value="Mg">Mg</option>
@@ -192,11 +192,13 @@ const handleImageUpload = async (e) => {
   {...register("companyName")}
   className="input input-bordered w-full"
 />
-  <input type="number"
+<input 
+  type="number"
   placeholder="Discount"
-  {...register("Discount")}
+  {...register("discount")}
   className="input input-bordered w-full"
 />
+
 
               <div className="modal-action">
                 <button type="submit" className="btn bg-green-500">
