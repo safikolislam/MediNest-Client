@@ -174,7 +174,7 @@ const handleImageUpload = async (e) => {
                 <option value="Pain & Fever Relief">Pain & Fever Relief</option>
                 
                 <option value="Diabetes ">Diabates</option>
-                <option value=" Eye Care"> Eye Care</option>
+                <option value="Eye Care">Eye Care</option>
               </select>
               <select {...register("massUnit")} className="select select-bordered w-full">
                 <option value="Mg">Mg</option>
