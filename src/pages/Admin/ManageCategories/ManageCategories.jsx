@@ -111,6 +111,7 @@ const ManageCategories = () => {
 
   return (
     <div className="p-6">
+      <title>Manage Categories || medinest</title>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Manage Categories</h2>
         <button

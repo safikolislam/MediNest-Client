@@ -5,6 +5,7 @@ import Sidebar from '../Components/Sidebar'
 const DashboardLayout = () => {
   return (
     <div className='relative min-h-screen md:flex bg-white'>
+      <title>DashBoard || MediNest</title>
    
       <Sidebar></Sidebar>
    

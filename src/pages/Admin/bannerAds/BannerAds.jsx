@@ -66,6 +66,7 @@ const BannerAds = () => {
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
+      <title>Banner Advertisement || medinest</title>
       <h2 className="text-3xl font-extrabold mb-6 text-green-800 border-b pb-2">
         Manage Banner Advertisements
       </h2>
@@ -96,22 +97,14 @@ const BannerAds = () => {
                   </td>
                   <td className="py-3 px-6">{med.name || "-"}</td>
                   <td className="py-3 px-6">{med.description || "-"}</td>
-                  <td className="py-3 px-6">
-                    {med.sellerEmails && med.sellerEmails.length > 0 ? (
-                      <div className="flex flex-wrap gap-1">
-                        {med.sellerEmails.map((email, idx) => (
-                          <span
-                            key={idx}
-                            className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"
-                          >
-                            {email}
-                          </span>
-                        ))}
-                      </div>
-                    ) : (
-                      "Unknown"
-                    )}
-                  </td>
+      <td className="py-3 px-6">
+      {med.sellerEmail ? (
+       <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+       {med.sellerEmail} </span>
+        ) : (
+        "Unknown"
+         )}
+        </td>
                   <td className="py-3 px-6 text-center">
                     <ToggleSwitch
                       on={!!med.inSlider}

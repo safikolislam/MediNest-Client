@@ -27,6 +27,7 @@ const UserPayments = () => {
 
   return (
     <div className="container mx-auto p-6">
+      <title>My Payment || User Dashboard</title>
       <h2 className="text-3xl font-extrabold mb-6 text-gray-800 text-center">
          My Payment History
       </h2>

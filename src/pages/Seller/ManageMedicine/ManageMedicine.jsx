@@ -45,20 +45,20 @@ const handleImageUpload = async (e) => {
 
     const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_NAME}/image/upload`;
     
-    // Use axios to post the image data to Cloudinary
+  
     const res = await axios.post(cloudinaryUrl, formData);
     
-    // Set the uploaded image URL to state
+
     setUploadedImageUrl(res.data.secure_url);
     
-    // Provide a success message to the user
+ 
     toast.success("Image uploaded!");
 
   } catch (error) {
     console.error(error);
-    // Provide a user-friendly error message
+   
     toast.error("Image upload failed.");
-    setUploadedImageUrl(""); // Clear the URL on failure
+    setUploadedImageUrl(""); 
   }
 };
 
@@ -89,6 +89,7 @@ const handleImageUpload = async (e) => {
 
   return (
     <div className="p-6">
+      <title>Seller Dashboard || Manage Medicine</title>
     
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Manage Medicines</h2>
@@ -126,7 +127,7 @@ const handleImageUpload = async (e) => {
                   <td>{med.name}</td>
                   <td>{med.generic}</td>
                   <td>{med.category}</td>
-                  <td>{med.company}</td>
+                  <td>{med.companyName}</td>
                   <td>{med.massUnit}</td>
                   <td>${med.price}</td>
                   <td>{med.discount}%</td>
@@ -166,14 +167,14 @@ const handleImageUpload = async (e) => {
                 onChange={handleImageUpload}
               />
               <select {...register("category")} className="select select-bordered w-full">
-                <option value="Pain Relief">Pain Relief</option>
+                <option value="Allergies & Colds">Allergies & Colds</option>
                 <option value="Antibiotics">Antibiotics</option>
-                <option value="Vitamins">Vitamins</option>
-                <option value="Cough & Cold">Cough & Cold</option>
-                <option value="Skin Care">Skin Care</option>
-                <option value="Digestive Health">Digestive Health</option>
-                <option value="Diabetes Care">Diabetes Care</option>
-                <option value="Eye & Ear Care">Eye & Ear Care</option>
+                <option value="Vitamins & Supplements">Vitamins & Supplements</option>
+               
+                <option value="Pain & Fever Relief">Pain & Fever Relief</option>
+                
+                <option value="Diabetes ">Diabates</option>
+                <option value=" Ear Care"> Ear Care</option>
               </select>
               <select {...register("massUnit")} className="select select-bordered w-full">
                 <option value="Mg">Mg</option>
@@ -185,13 +186,18 @@ const handleImageUpload = async (e) => {
                 {...register("price", { required: true })}
                 className="input input-bordered w-full"
               />
-              <input
-                type="number"
-                placeholder="Discount %"
-                defaultValue={0}
-                {...register("discount")}
-                className="input input-bordered w-full"
-              />
+       
+  <input type="text"
+  placeholder="Company Name"
+  {...register("companyName")}
+  className="input input-bordered w-full"
+/>
+  <input type="number"
+  placeholder="Discount"
+  {...register("Discount")}
+  className="input input-bordered w-full"
+/>
+
               <div className="modal-action">
                 <button type="submit" className="btn bg-green-500">
                   Save

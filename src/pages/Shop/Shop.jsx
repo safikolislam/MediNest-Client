@@ -1,31 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useLocation } from "react-router";
-import LoadingSpinner from "../../Components/LoadingSpinner";
 import useAuth from "../../hooks/useAuth";
-import { FcPrevious, FcNext } from "react-icons/fc";
 import { toast } from "react-toastify";
+
+
+
+
+
 
 function useUrlQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 9;
 
 const Shop = () => {
   const query = useUrlQuery();
   const selectedCategory = query.get("category");
 
- 
+
+
   const { data: medicinesData, isLoading } = useQuery({
     queryKey: ["medicines"],
     queryFn: async () => {
+     
       const res = await fetch(`${import.meta.env.VITE_API_URL}/all-medicines`);
       return res.json();
     },
   });
 
-  
   const medicines = Array.isArray(medicinesData) ? medicinesData : [];
 
   const { addToCart, user } = useAuth();
@@ -54,9 +58,10 @@ const Shop = () => {
     setSelectedMedicine(null);
   };
 
-  if (isLoading) return <LoadingSpinner />;
 
-  // --- Filtering ---
+  if (isLoading) return <div className="text-center py-10 text-xl font-bold">Loading...</div>;
+
+ 
   let filteredMedicines = selectedCategory
     ? medicines.filter((m) => m.category === selectedCategory)
     : [...medicines];
@@ -67,17 +72,17 @@ const Shop = () => {
     );
   }
 
-  // --- Sorting ---
+
   if (Array.isArray(filteredMedicines)) {
     filteredMedicines.sort((a, b) => {
-      if (sortOption === "priceLow") return a.price - b.price;
-      if (sortOption === "priceHigh") return b.price - a.price;
+      if (sortOption === "priceLow") return (a.price ?? 0) - (b.price ?? 0);
+      if (sortOption === "priceHigh") return (b.price ?? 0) - (a.price ?? 0);
       if (sortOption === "discount") return (b.discount || 0) - (a.discount || 0);
       return 0;
     });
   }
 
-  // --- Pagination ---
+
   const totalPages = Math.ceil(filteredMedicines.length / ITEMS_PER_PAGE);
   const paginatedMedicines = filteredMedicines.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -91,11 +96,12 @@ const Shop = () => {
 
   return (
     <div className="mt-15 flex flex-col p-6 min-h-screen gap-6 bg-gradient-to-b from-green-50 to-white">
+      <title>Shop || MediNests</title>
       <h2 className="text-3xl font-bold mb-4 text-green-600">
         {selectedCategory ? `${selectedCategory} Medicines` : "All Medicines"}
       </h2>
 
-      {/* Search + Sort */}
+  
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
         <input
           type="text"
@@ -116,13 +122,14 @@ const Shop = () => {
         </select>
       </div>
 
-      {/* Medicines Table */}
+   
       <div className="overflow-hidden rounded-xl shadow-lg border border-gray-200">
         <table className="w-full text-left">
           <thead>
             <tr className="bg-gradient-to-r from-green-500 to-blue-500 text-white">
               <th className="p-3">Image</th>
               <th className="p-3">Name</th>
+              <th className="p-3">Company</th>
               <th className="p-3">Price</th>
               <th className="p-3">Discount</th>
               <th className="p-3">Final Price</th>
@@ -132,8 +139,8 @@ const Shop = () => {
           <tbody>
             {paginatedMedicines.map((med, index) => {
               const finalPrice = med.discount
-                ? (med.price - (med.price * med.discount) / 100).toFixed(2)
-                : med.price.toFixed(2);
+                ? (((med.price ?? 0) - ((med.price ?? 0) * (med.discount ?? 0)) / 100)).toFixed(2)
+                : (med.price ?? 0).toFixed(2);
 
               return (
                 <tr
@@ -152,8 +159,11 @@ const Shop = () => {
                   <td className="p-3 border-t font-medium text-gray-800">
                     {med.name}
                   </td>
+                  <td className="p-3 border-t font-medium text-gray-800">
+                    {med.companyName}
+                  </td>
                   <td className="p-3 border-t text-gray-600">
-                    ${med.price.toFixed(2)}
+                    ${(med.price ?? 0).toFixed(2)}
                   </td>
                   <td className="p-3 border-t text-gray-600">
                     {med.discount ? (
@@ -188,7 +198,7 @@ const Shop = () => {
         </table>
       </div>
 
-      {/* Pagination */}
+ 
       <div className="flex justify-center mt-6 gap-4 items-center">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
@@ -199,7 +209,8 @@ const Shop = () => {
               : "bg-white text-gray-700 hover:bg-green-100"
           }`}
         >
-          <FcPrevious /> Previous
+       
+          {"<"} Previous
         </button>
 
         <span className="px-4 py-2 text-green-600 font-semibold">
@@ -215,7 +226,7 @@ const Shop = () => {
               : "bg-white text-gray-700 hover:bg-green-100"
           }`}
         >
-          Next <FcNext />
+          Next {">"}
         </button>
       </div>
 
@@ -238,8 +249,8 @@ const Shop = () => {
               className="w-full h-44 object-cover mb-4 rounded-lg shadow"
             />
             <p className="text-gray-700 mb-2">
-              <strong>Price:</strong> $
-              {selectedMedicine.price ? selectedMedicine.price.toFixed(2) : "N/A"}
+              <strong>Price:</strong> ${" "}
+              {(selectedMedicine.price ?? 0).toFixed(2)}
             </p>
             {selectedMedicine.discount > 0 && (
               <p className="text-red-600 mb-2">
@@ -248,12 +259,10 @@ const Shop = () => {
             )}
             <p className="text-green-700 mb-2 font-semibold">
               <strong>Final Price:</strong>{" "}
-              {selectedMedicine.price
-                ? (
-                    selectedMedicine.price -
-                    (selectedMedicine.price * selectedMedicine.discount) / 100
-                  ).toFixed(2)
-                : "N/A"}
+              {(
+                (selectedMedicine.price ?? 0) -
+                ((selectedMedicine.price ?? 0) * (selectedMedicine.discount ?? 0)) / 100
+              ).toFixed(2)}
             </p>
             <p className="text-gray-600">
               <strong>Description:</strong>{" "}

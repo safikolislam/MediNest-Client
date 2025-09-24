@@ -23,6 +23,7 @@ const ManageUsers = () => {
   return (
     <>
       <div className="container mx-auto px-4 sm:px-8">
+        <title>Manage Users || MediNest</title>
         <div className="py-10">
        
           <div className="mb-8 text-center">

@@ -76,6 +76,7 @@ const Report = () => {
 
   return (
     <div className="min-h-screen p-6 bg-gray-100">
+      <title>Sales Report || Medinest</title>
       <div className="max-w-7xl mx-auto bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-3xl font-bold mb-6">All Orders Report</h2>
 

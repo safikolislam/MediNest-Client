@@ -34,7 +34,6 @@ const Store = () => {
     }
   };
 
-  // ✅ Calculate discounted total
   const totalPrice = cart.reduce((acc, item) => {
     const finalPrice = item.discount
       ? item.price - (item.price * item.discount) / 100
@@ -44,6 +43,7 @@ const Store = () => {
 
   return (
     <div className="p-6 min-h-screen bg-gray-50">
+      <title>Your Cart || MediNest</title>
       <h2 className="text-4xl font-bold mb-6 mt-20 text-center text-gray-800">
         🛒 Your Cart
       </h2>
@@ -80,7 +80,7 @@ const Store = () => {
                       Company: {item.company}
                     </p>
 
-                    {/* Show Original + Discounted Price */}
+                
                     <p className="text-sm text-gray-600 mt-1">
                       Price:{" "}
                       {item.discount ? (
@@ -97,12 +97,12 @@ const Store = () => {
                       )}
                     </p>
 
-                    {/* Subtotal */}
+            
                     <p className="text-sm font-semibold text-green-600 mt-1">
                       Subtotal: ${subtotal.toFixed(2)}
                     </p>
 
-                    {/* Quantity Controls */}
+             
                     <div className="flex items-center space-x-2 mt-3 bg-gray-100 p-1 rounded-lg w-max">
                       <button
                         onClick={() =>

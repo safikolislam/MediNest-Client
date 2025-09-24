@@ -13,7 +13,7 @@ const CheckOutForm = ({ totalPrice }) => {
   const [cardError, setCardError] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
-   const { user, cart } = useAuth();
+  const { user, cart,setCart } = useAuth();
 
   useEffect(() => {
     if (totalPrice > 0) {
@@ -57,14 +57,13 @@ const CheckOutForm = ({ totalPrice }) => {
     const { error, paymentIntent } = await stripe.confirmCardPayment(
       clientSecret,
       {
-        payment_method: { card ,
-   billing_details:{
-            name:user?.displayName,
-            email:user?.email,
-         }
-
+        payment_method: {
+          card,
+          billing_details: {
+            name: user?.displayName,
+            email: user?.email,
+          },
         },
-       
       }
     );
 
@@ -74,25 +73,28 @@ const CheckOutForm = ({ totalPrice }) => {
       toast.error(error.message || "An unexpected error occurred.");
       setProcessing(false);
     } else if (paymentIntent.status === "succeeded") {
-        //save order data in db 
-        const orderData ={
-           userName: user?.displayName,
-    userEmail: user?.email,
-    transactionId: paymentIntent.id,
-    totalPrice: totalPrice,
-    timestamp:new Date(),
-        }
-      axios.post(`${import.meta.env.VITE_API_URL}/save-order`,orderData)
-     .then((res) => {
-      if (res.data.insertedId) {
-        toast.success("Payment successful and order saved!");
-        navigate("/invoice", { state: { orderData, cart } });
-      }
-    })
-    .catch((error) => {
-      console.error("Error saving order:", error);
-      toast.error("Payment was successful, but the order could not be saved.");
-    });
+     
+      const orderData = {
+        userName: user?.displayName,
+        userEmail: user?.email,
+        transactionId: paymentIntent.id,
+        totalPrice,
+        cart, 
+      };
+
+      axios.post(`${import.meta.env.VITE_API_URL}/save-order`, orderData)
+        .then((res) => {
+          if (res.data.insertedId) {
+            toast.success("Payment successful and order saved!");
+            localStorage.removeItem('cart');
+            setCart([])
+            navigate("/invoice", { state: { orderData, cart } });
+          }
+        })
+        .catch((error) => {
+          console.error("Error saving order:", error);
+          toast.error("Payment was successful, but the order could not be saved.");
+        });
 
       setProcessing(false);
     } else {
@@ -142,3 +144,10 @@ const CheckOutForm = ({ totalPrice }) => {
 };
 
 export default CheckOutForm;
+
+
+
+
+
+
+

@@ -44,6 +44,7 @@ const Login = () => {
   return (
     <div className="mt-30 flex flex-col md:flex-row items-center justify-center gap-36 p-8">
 
+      <title>Login || Medinest</title>
       <div className="lg:w-[500px] bg-white p-6 rounded-lg shadow-md">
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text-2xl font-semibold mb-4">Login to Your Account</h2>

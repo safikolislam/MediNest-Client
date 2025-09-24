@@ -74,6 +74,7 @@ const handleImageUpload = async (e) => {
 
     return (
         <div className="flex flex-col md:flex-row items-center justify-center gap-36 p-8 mt-10">
+           <title>Sign Up || Medinest</title>
             <div className="lg:w-[500px] bg-white p-6 rounded-lg shadow-md">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <h2 className="text-2xl font-semibold mb-4">Create An Account!</h2>

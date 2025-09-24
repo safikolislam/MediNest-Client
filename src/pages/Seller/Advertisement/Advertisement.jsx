@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-// --- Modal ---
 const AddAdModal = ({ isOpen, onClose, onAddAd, medicines }) => {
   const [medicineId, setMedicineId] = useState("");
   const [image, setImage] = useState("");
@@ -18,7 +17,9 @@ const AddAdModal = ({ isOpen, onClose, onAddAd, medicines }) => {
   if (!isOpen) return null;
 
   return (
+    
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <title>Advertisement || Seller Dashboard </title>
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md space-y-4"
@@ -152,6 +153,7 @@ const Advertisement = () => {
         medicines={medicines}
       />
     </div>
+    
   );
 };
 

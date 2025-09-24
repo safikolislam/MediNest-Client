@@ -6,8 +6,9 @@ import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, 
     ResponsiveContainer 
 } from 'recharts';
+import LoadingSpinner from '../LoadingSpinner';
 
-// Enhanced, reusable StatCard with icons
+
 const StatCard = ({ title, value, icon, colorClass }) => (
   <div className={`relative flex items-center p-5 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out border-l-4 ${colorClass}`}>
     <div className="mr-4">
@@ -20,7 +21,7 @@ const StatCard = ({ title, value, icon, colorClass }) => (
   </div>
 );
 
-// Custom label for Pie Chart to show percentages
+
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -45,12 +46,7 @@ const AdminStatistics = () => {
   });
 
   if (isLoading) {
-    return (
-      <div className="flex flex-col justify-center items-center h-screen bg-slate-100">
-        <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-sky-500"></div>
-        <div className="mt-4 text-lg font-semibold text-gray-700">Loading Dashboard...</div>
-      </div>
-    );
+    return <LoadingSpinner></LoadingSpinner>
   }
 
   if (error) {
@@ -141,7 +137,7 @@ const AdminStatistics = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* Column (Bar) Chart */}
+   
         <div className="lg:col-span-3 flex flex-col p-6 bg-white rounded-lg shadow-md">
           <h3 className="text-xl font-bold mb-6 text-gray-800">Financial Summary</h3>
           <ResponsiveContainer width="100%" height={300}>

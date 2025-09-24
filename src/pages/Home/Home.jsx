@@ -15,6 +15,7 @@ import DiscountProducts from '../../Components/DiscountProducts';
 const Home = () => {
     return (
         <div>
+            <title>Home || MediNest</title>
          <AdminSlider></AdminSlider>
             <CategorySection></CategorySection>
             

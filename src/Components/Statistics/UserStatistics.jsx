@@ -55,7 +55,7 @@ const UserStatistics = () => {
 
     return (
         <div className="container mx-auto p-4">
-            <h2 className="text-3xl font-bold mb-6 text-center">User Statistics Dashboard </h2>
+            <h2 className="text-3xl font-bold text-shadow-green-500 mb-6 text-center">User Statistics Dashboard </h2>
 
       
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 text-center">

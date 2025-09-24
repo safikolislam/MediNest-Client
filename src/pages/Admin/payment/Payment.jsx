@@ -3,6 +3,7 @@ import React from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import LoadingSpinner from '../../../Components/LoadingSpinner';
 
 const AdminPayments = () => {
     const queryClient = useQueryClient();
@@ -34,11 +35,12 @@ const AdminPayments = () => {
         acceptPaymentMutation.mutate(orderId);
     };
 
-    if (isLoading) return <div>Loading payments...</div>;
+    if (isLoading) return <LoadingSpinner></LoadingSpinner>;
     if (error) return <div>Error fetching data: {error.message}</div>;
 
     return (
         <div className="container mx-auto p-4">
+            <title>All Payment || MediNest</title>
             <h2 className="text-2xl font-bold mb-4">Payment Management</h2>
             <div className="overflow-x-auto">
                 <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
