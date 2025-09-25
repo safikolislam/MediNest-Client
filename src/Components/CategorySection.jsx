@@ -21,7 +21,7 @@ const CategorySection = () => {
   }
 
   const handleCategoryClick = (categoryName) => {
-    navigate(`/shop?category=${categoryName}`);
+    navigate(`/shop?category=${encodeURIComponent(categoryName)}`);
   };
 
   return (

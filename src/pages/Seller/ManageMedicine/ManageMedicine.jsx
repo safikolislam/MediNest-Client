@@ -167,13 +167,13 @@ const handleImageUpload = async (e) => {
                 onChange={handleImageUpload}
               />
               <select {...register("category")} className="select select-bordered w-full">
-                <option value="Allergies & Colds">Allergies & Colds</option>
+                <option value="Allergies & Colds ">Allergies & Colds</option>
                 <option value="Antibiotics">Antibiotics</option>
                 <option value="Vitamins & Supplements">Vitamins & Supplements</option>
                
                 <option value="Pain & Fever Relief">Pain & Fever Relief</option>
                 
-                <option value="Diabetes ">Diabates</option>
+                <option value="Diabates">Diabates</option>
                 <option value="Eye Care">Eye Care</option>
               </select>
               <select {...register("massUnit")} className="select select-bordered w-full">
