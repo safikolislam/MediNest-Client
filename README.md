@@ -131,74 +131,7 @@ A full-stack multi-vendor e-commerce application for medicines and healthcare pr
 
 * `GET /api/reports/sales?start=&end=&format=pdf|csv|xlsx` — admin download
 
----
 
-## Database Schema (MongoDB) — simplified
-
-### User
-
-```json
-{
-  _id,
-  name,
-  email,
-  photoURL,
-  passwordHash,
-  role: "user" | "seller" | "admin",
-  createdAt
-}
-```
-
-### Category
-
-```json
-{ _id, name, imageURL, productCount }
-```
-
-### Product
-
-```json
-{
-  _id,
-  name,
-  genericName,
-  description,
-  imageURL,
-  categoryId,
-  company,
-  unit: "mg" | "ml",
-  price,
-  discountPercent,
-  sellerId,
-  createdAt
-}
-```
-
-### Order / Payment
-
-```json
-{
-  _id,
-  buyerId,
-  sellerId,
-  products: [{productId, qty, unitPrice}],
-  subtotal,
-  tax,
-  shipping,
-  total,
-  status: "pending" | "paid",
-  transactionId,
-  createdAt
-}
-```
-
-### Advertise
-
-```json
-{ _id, productId, sellerId, imageURL, description, onSlider: boolean }
-```
-
----
 
 ## Important Implementation Notes & Tips
 
