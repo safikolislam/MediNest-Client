@@ -30,7 +30,7 @@ const Store = () => {
         }
       );
     } catch (error) {
-      console.error("Error updating backend quantity:", error);
+     
     }
   };
 
@@ -134,7 +134,7 @@ const Store = () => {
                         toast.success("Item removed from cart!");
                       }}
                     >
-                      ❌ Remove
+                       Remove
                     </button>
                   </div>
                 </li>
@@ -153,13 +153,13 @@ const Store = () => {
                 className="bg-gray-400 hover:bg-gray-500 text-white px-6 py-2 rounded-lg transition"
                 onClick={clearCart}
               >
-                🗑️ Clear All
+                 Clear All
               </button>
               <button
                 className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg transition"
                 onClick={() => navigate("/checkout")}
               >
-                ✅ Checkout
+                 Checkout
               </button>
             </div>
           </div>

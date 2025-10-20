@@ -3,7 +3,6 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../Contexts/AuthContext';
-
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
 
@@ -24,17 +23,17 @@ const Navbar = () => {
 
   return (
     <>
-    
+   
       <div className="navbar fixed top-0 left-0 w-full 
-        bg-gradient-to-r from-green-600/20 via-emerald-500/20 to-green-300/20 
-        backdrop-blur-xl backdrop-saturate-150 shadow-lg 
-        border-b border-white/20 text-white text-xl font-bold px-5 md:px-8 py-4 z-50 rounded-b-2xl">
+        bg-green-200
+     shadow-lg 
+         text-black text-xl font-bold px-5 md:px-8 py-4 z-50 rounded-b-2xl">
 
-     
+    
         <div className="flex w-full items-center justify-between lg:hidden">
           <NavLink to="/" className="flex items-center gap-2">
             <img className="w-10 h-10" src={logo} alt="MediNest logo" />
-            <span className="btn btn-ghost text-xl normal-case">MediNest</span>
+            <span className="text-xl font-bold">MediNest</span>
           </NavLink>
 
           <button onClick={() => setMenuOpen(!menuOpen)} className="btn btn-ghost">
@@ -46,34 +45,24 @@ const Navbar = () => {
               stroke="currentColor"
             >
               {menuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
               )}
             </svg>
           </button>
         </div>
 
-      
         <div className="hidden lg:flex w-full items-center justify-between">
-        
+  
           <div className="flex items-center gap-2 w-1/3">
             <NavLink to="/" className="flex items-center gap-2">
               <img className="w-10 h-10" src={logo} alt="MediNest logo" />
-              <span className="text-xl normal-case">MediNest</span>
+              <span className="text-xl font-bold">MediNest</span>
             </NavLink>
           </div>
 
+       
           <div className="navbar-center">
             <ul className="flex gap-6 text-lg font-medium">
               <li>
@@ -109,21 +98,21 @@ const Navbar = () => {
 
         
           <div className="flex items-center gap-5 w-1/3 justify-end">
-      
+          
             <Link
               to="/store"
               className="relative flex items-center justify-center w-11 h-11 rounded-full 
                 bg-green-600 hover:bg-green-700 transition duration-200 shadow-md"
             >
               <FaShoppingCart className="text-white text-lg" />
-              { cart.length > 0 && (
+              {cart.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-2 py-0.5 shadow">
                   {cart.length}
                 </span>
               )}
             </Link>
 
-     
+      
             {user ? (
               <div className="dropdown dropdown-end">
                 <div
@@ -191,7 +180,7 @@ const Navbar = () => {
         </div>
       </div>
 
-
+    
       <div
         className={`fixed top-0 left-0 h-full w-full bg-white z-50 transform transition-transform duration-300 ${
           menuOpen ? 'translate-x-0' : '-translate-x-full'
@@ -248,14 +237,16 @@ const Navbar = () => {
               </NavLink>
             </li>
           )}
+
+         
           <li>
-            <NavLink 
-              to="/store" 
-              onClick={() => setMenuOpen(false)} 
+            <NavLink
+              to="/store"
+              onClick={() => setMenuOpen(false)}
               className="flex items-center gap-2"
             >
               <FaShoppingCart />
-              { cart.length > 0 && (
+              {cart.length > 0 && (
                 <span className="bg-red-500 text-white text-xs font-bold rounded-full px-2 py-0.5">
                   {cart.length}
                 </span>
@@ -266,7 +257,7 @@ const Navbar = () => {
         </ul>
       </div>
 
-   
+
       {menuOpen && (
         <div
           className="fixed inset-0 bg-black/30 z-40"
@@ -278,6 +269,33 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

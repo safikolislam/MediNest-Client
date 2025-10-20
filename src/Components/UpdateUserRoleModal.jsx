@@ -11,7 +11,7 @@ const UpdateUserRoleModal = ({ isOpen, setIsOpen,  userEmail }) => {
   const axiosSecure = useAxiosSecure()
   const queryClient = useQueryClient()
   const [updatedRole, setUpdatedRole] = useState('user')
-  console.log(updatedRole)
+
 
 
 
@@ -30,7 +30,7 @@ const UpdateUserRoleModal = ({ isOpen, setIsOpen,  userEmail }) => {
       return data
     },
     onSuccess: data => {
-      console.log(data)
+    
     
       toast.success('User Role Updated Successfully')
       setIsOpen(false)
@@ -38,10 +38,10 @@ const UpdateUserRoleModal = ({ isOpen, setIsOpen,  userEmail }) => {
       queryClient.invalidateQueries(['users'])
     },
     onError: error => {
-      console.log(error)
+     
     },
   })
-console.log(userEmail);
+
   const handleSubmit = e => {
     e.preventDefault()
     mutation.mutate(updatedRole)

@@ -12,7 +12,7 @@ const PaymentHistory = () => {
       axios
         .get(`${import.meta.env.VITE_API_URL}/seller-orders?email=${user.email}`)
         .then((res) => setOrders(res.data))
-        .catch((error) => console.error("Error fetching seller orders:", error));
+        .catch((error) => ("Error fetching seller orders:", error));
     }
   }, [user]);
 

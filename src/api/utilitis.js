@@ -6,5 +6,5 @@ export const saveUserInDb = async user => {
     
   )
 
-  console.log(data)
+ 
 }

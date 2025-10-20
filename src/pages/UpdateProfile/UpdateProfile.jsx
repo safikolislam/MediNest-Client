@@ -29,7 +29,7 @@ const UpdateProfile = () => {
     
       toast.success('Profile updated successfully!');
     } catch (error) {
-      console.error('Error updating profile:', error);
+     
       toast.error('Failed to update profile.');
     } finally {
       setLoading(false);
@@ -52,7 +52,7 @@ const handleImageUpload = async (e) => {
     setProfilePic(res.data.secure_url);
     toast.success('Image uploaded successfully!');
   } catch (error) {
-    console.error('Image upload failed:', error);
+  
      toast.error('Image upload failed.');
   }
 };

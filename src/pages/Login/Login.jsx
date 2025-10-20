@@ -16,7 +16,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = data => {
-    console.log(data);
+  
     signIn(data.email, data.password)
       .then(result => {
         const userData = {
@@ -33,7 +33,7 @@ const Login = () => {
         });
       })
       .catch(error => {
-        console.error(error);
+       
       });
   };
 

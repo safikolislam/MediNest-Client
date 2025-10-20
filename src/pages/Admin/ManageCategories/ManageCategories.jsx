@@ -33,7 +33,7 @@ const ManageCategories = () => {
       setModalOpen(false);
     },
     onError: (error) => {
-      console.error('Add category error:', error);
+    
       Swal.fire('Error!', 'Failed to add category.', 'error');
     },
   });
@@ -49,7 +49,7 @@ const ManageCategories = () => {
       Swal.fire('Deleted!', 'Category deleted successfully.', 'success');
     },
     onError: (error) => {
-      console.error('Delete category error:', error);
+    
       Swal.fire('Error!', 'Failed to delete category.', 'error');
     },
   });
@@ -71,7 +71,7 @@ const ManageCategories = () => {
       setUploadedImageUrl(res.data.secure_url);
       Swal.fire('Success!', 'Image uploaded successfully.', 'success');
     } catch (error) {
-      console.error('Image upload failed:', error);
+    
       Swal.fire('Error!', 'Failed to upload image.', 'error');
     }
   };

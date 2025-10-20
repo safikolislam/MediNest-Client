@@ -7,7 +7,7 @@
        flex 
        flex-col 
        justify-center 
-//       items-center `}
+       items-center `}
      >
       <ScaleLoader size={100} color='#32CD30aa' />
      </div>

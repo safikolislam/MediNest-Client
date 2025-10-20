@@ -3,10 +3,10 @@ import image from "../assets/close-up-doctor-with-stethoscope.jpg";
 const Support = () => {
   return (
     
-    <section data-aos="fade-up" data-aos-duration="1000" className="bg-gradient-to-br from-green-50 to-green-100 py-20 px-6 md:px-20 ">
+    <section data-aos="fade-up" data-aos-duration="1000" className=" py-20 px-6 md:px-20 ">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-16 text-green-700 leading-tight">
-          Expert Healthcare Support & Easy Consultations
+          Expert Healthcare Support 
         </h2>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -53,9 +53,7 @@ const Support = () => {
               </li>
             </ul>
 
-            <button className="mt-10 bg-green-500 hover:bg-green-600 transition duration-300 ease-in-out text-white font-bold py-4 px-8 rounded-full shadow-lg transform hover:-translate-y-1">
-              Start Your Consultation
-            </button>
+          
           </div>
         </div>
       </div>

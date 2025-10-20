@@ -34,7 +34,7 @@ const useAxiosSecure = () => {
 
        
         if ((status === 401 || status === 403) && localStorage.getItem("access-token")) {
-          console.warn("Unauthorized request - logging out");
+        
           await logOut();
           navigate("/login");
         }

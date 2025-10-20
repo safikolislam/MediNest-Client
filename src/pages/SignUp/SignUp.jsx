@@ -39,9 +39,9 @@ const SignUp = () => {
                 confirmButtonText: 'Okay',
             });
 
-            console.log("User created:", result.user);
+          
         } catch (error) {
-            console.error(error);
+        
             toast.error("Signup failed. Please try again.");
         }
     };
@@ -62,7 +62,7 @@ const handleImageUpload = async (e) => {
     setProfilePic(res.data.secure_url);
     toast.success("Image uploaded!");
   } catch (error) {
-    console.error(error);
+ 
     toast.error("Image upload failed.");
   }
 };

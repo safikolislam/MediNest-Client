@@ -11,7 +11,7 @@ const SocialLogin = () => {
     const handleGoogleSignIn = ()=>{
             signInWithGoogle()
             .then(result=>{
-                console.log(result.user);
+               
                const userData = {
                 name:result?.user?.displayName,
                 email:result?.user?.email,
@@ -26,7 +26,7 @@ const SocialLogin = () => {
                             });
             })
             .catch(error=>{
-                console.log(error);
+             
             })
     }
     return (

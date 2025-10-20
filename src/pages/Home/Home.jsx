@@ -5,6 +5,10 @@ import CategorySection from '../../Components/CategorySection';
 import AdminSlider from '../../Components/AdminSlider';
 import DiscountProducts from '../../Components/DiscountProducts';
 
+import CustomerReviews from '../../Components/CustomerReviews';
+import LatestProducts from '../../Components/LatestProducts';
+import Benefits from '../../Components/Benefits';
+
 
 
 
@@ -19,9 +23,13 @@ const Home = () => {
          <AdminSlider></AdminSlider>
             <CategorySection></CategorySection>
             
+          <LatestProducts></LatestProducts>
           <DiscountProducts></DiscountProducts>
           <Support></Support>
+          <Benefits></Benefits>
+           <CustomerReviews></CustomerReviews>
            <FAQ></FAQ>
+         
         </div>
     );
 };

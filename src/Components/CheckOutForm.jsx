@@ -28,7 +28,7 @@ const CheckOutForm = ({ totalPrice }) => {
           setClientSecret(res.data.clientSecret);
         })
         .catch((error) => {
-          console.error("Error fetching client secret:", error);
+         
           setCardError("Failed to initialize payment. Please try again.");
           toast.error("Could not connect to payment server.");
         })
@@ -44,7 +44,7 @@ const CheckOutForm = ({ totalPrice }) => {
     event.preventDefault();
 
     if (!stripe || !elements || !clientSecret) {
-      console.log("Stripe.js not loaded or no client secret.");
+    
       return;
     }
 
@@ -68,7 +68,7 @@ const CheckOutForm = ({ totalPrice }) => {
     );
 
     if (error) {
-      console.error("[stripe_error]", error);
+     
       setCardError(error.message);
       toast.error(error.message || "An unexpected error occurred.");
       setProcessing(false);
@@ -92,7 +92,7 @@ const CheckOutForm = ({ totalPrice }) => {
           }
         })
         .catch((error) => {
-          console.error("Error saving order:", error);
+         
           toast.error("Payment was successful, but the order could not be saved.");
         });
 

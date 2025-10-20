@@ -41,7 +41,7 @@ const Sidebar = () => {
   const [isActive, setIsActive] = useState(false);
  
   const [role,isRoleLoading] = useRole()
-  console.log(isRoleLoading);
+
   const handleToggle = () => {
     setIsActive(!isActive);
   };

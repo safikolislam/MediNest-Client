@@ -55,7 +55,7 @@ const handleImageUpload = async (e) => {
     toast.success("Image uploaded!");
 
   } catch (error) {
-    console.error(error);
+
    
     toast.error("Image upload failed.");
     setUploadedImageUrl(""); 
