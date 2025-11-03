@@ -1,17 +1,18 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../hooks/useAxiosSecure";
+
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const LatestProducts = () => {
-  const axiosSecure = useAxiosSecure();
+ 
   const { user, cart, setCart } = useAuth();
 
   const { data: latestProducts = [], isLoading, isError, error } = useQuery({
     queryKey: ["latestProducts"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/medicines/latest");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/medicines/latest`);
       return res.data.slice(0, 6);
     },
     staleTime: 5 * 60 * 1000,

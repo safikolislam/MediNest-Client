@@ -25,12 +25,12 @@ const Navbar = () => {
     <>
    
       <div className="navbar fixed top-0 left-0 w-full 
-        bg-green-200
-     shadow-lg 
-         text-black text-xl font-bold px-5 md:px-8 py-4 z-50 rounded-b-2xl">
+  bg-green-200 shadow-lg text-black text-xl font-bold 
+  px-4 md:px-10 lg:px-20 xl:px-[330px] 
+  py-4 z-50 rounded-b-2xl mx-auto">
 
     
-        <div className="flex w-full items-center justify-between lg:hidden">
+        <div className="flex w-full items-center justify-between lg:hidden ">
           <NavLink to="/" className="flex items-center gap-2">
             <img className="w-10 h-10" src={logo} alt="MediNest logo" />
             <span className="text-xl font-bold">MediNest</span>

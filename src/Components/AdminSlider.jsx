@@ -13,10 +13,10 @@ const SlideContent = ({ med }) => (
     className="relative w-full flex flex-col md:flex-row items-center justify-center h-auto min-h-[500px] 
                bg-green-200 transition-colors duration-500"
   >
-    {/* Overlay for contrast */}
+   
     <div className="absolute inset-0 bg-green-300 opacity-80 transition-colors duration-500" />
 
-    <div className="relative z-20 w-full flex flex-col md:flex-row items-center justify-between p-6 sm:p-10 md:p-16 
+    <div className="relative z-20 w-full flex flex-col md:flex-row items-center justify-between p-6 sm:p-16 md:p-16 
                     bg-white/20 backdrop-blur-md rounded-xl shadow-lg transition-colors duration-500">
       
       <div className="flex-1 max-w-lg text-green-800 text-center md:text-left mb-8 md:mb-0 md:mr-10 transition-colors duration-500">
