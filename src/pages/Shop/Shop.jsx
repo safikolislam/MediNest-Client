@@ -83,7 +83,7 @@ const Shop = () => {
   };
 
   return (
-    <div className="mt-15 flex flex-col p-4 sm:p-6 min-h-screen gap-6 bg-gradient-to-b from-green-50 to-white">
+    <div className="mt-15 flex flex-col px-10 sm:px-16 py-5 sm:py-6 min-h-screen gap-6 bg-gradient-to-b from-green-50 to-white">
       <title>Shop || MediNest</title>
       <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-green-600 text-center">
         {selectedCategory ? `${selectedCategory} Medicines` : "All Medicines"}
@@ -131,9 +131,7 @@ const Shop = () => {
               return (
                 <tr
                   key={med._id || index}
-                  className={`transition duration-200 ${
-                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                  } hover:bg-green-50`}
+                  className={`transition duration-200 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"} hover:bg-green-50`}
                 >
                   <td className="p-3 border-t">
                     <img
@@ -214,7 +212,6 @@ const Shop = () => {
         </button>
       </div>
 
-      {/* Modal */}
       {isModalOpen && selectedMedicine && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-sm sm:max-w-md relative animate-fadeIn">
@@ -260,6 +257,7 @@ const Shop = () => {
 };
 
 export default Shop;
+
 
 
 

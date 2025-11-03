@@ -26,7 +26,7 @@ const Navbar = () => {
    
       <div className="navbar fixed top-0 left-0 w-full 
   bg-green-200 shadow-lg text-black text-xl font-bold 
-  px-4 md:px-10 lg:px-20 xl:px-[330px] 
+  px-4 md:px-10 lg:px-20 xl:px-[220px] 
   py-4 z-50 rounded-b-2xl mx-auto">
 
     
@@ -91,6 +91,18 @@ const Navbar = () => {
                   }
                 >
                   Shop
+                </NavLink>
+                <NavLink
+                  to="/Contact Us"
+                  className={({ isActive }) =>
+                    `px-3 py-2 ml-5 rounded-md transition-colors duration-300 ${
+                      isActive
+                        ? "bg-green-600 text-white shadow-md"
+                        : "hover:text-green-700 hover:bg-green-100/40"
+                    }`
+                  }
+                >
+                  Contact Us
                 </NavLink>
               </li>
             </ul>
@@ -206,6 +218,9 @@ const Navbar = () => {
           <li>
             <NavLink to="/Shop" onClick={() => setMenuOpen(false)}>Shop</NavLink>
           </li>
+          <li>
+            <NavLink to="/Contact Us" onClick={() => setMenuOpen(false)}>Contact Us</NavLink>
+          </li>
           {user ? (
             <>
               <li>
@@ -269,6 +284,9 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+
 
 
 

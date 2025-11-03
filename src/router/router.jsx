@@ -29,6 +29,7 @@ import AdminRoute from "./AdminRoute";
 import UserPaymentHistory from "../pages/User/UserPaymentHistory/UserPaymentHistory";
 
 import Statistics from "../shared/Statistics";
+import ContactUs from "../pages/Contact Us/ContactUs";
 
 
 
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
       {
         path: "Shop",
         element: <Shop></Shop>,
+      },
+      {
+        path:"Contact Us",
+        element:<ContactUs></ContactUs>
       },
       {
         path: "UpdateProfile",
